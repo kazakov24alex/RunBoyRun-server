@@ -1,14 +1,21 @@
-/**
- * Created by alex on 05.03.17.
- */
 
-var http = require('http');
+// Entry point
+var express = require('express');
+var config = require('./config');
 
-var server = new http.Server();  // EventEmitter
 
-server.listen(1337, '127.0.0.1');
 
-server.on('request', function(req,res) {
+// Create express.js app
+var app = express();
+
+
+app.get('*', function (req, res){
     res.end('RunBoyRun server. Welcome!');
 });
 
+
+// Server launch
+var port = process.env.PORT || config.server.defaultPort;
+app.listen(port, function() {
+    console.log("RunBoyRun server started at " + port);
+});
