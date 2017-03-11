@@ -1,24 +1,21 @@
-
 {
   "name": "RunBoyRun-server",
   "version": "0.0.1",
   "private": true,
   "main": "server.js",
-
   "scripts": {
     "start": "node server.js"
   },
-
   "repository": {
     "type": "git",
     "url": "git+https://github.com/kazakov24alex/RunBoyRun-server.git"
   },
-
   "dependencies": {
     "body-parser": "^1.15.2",
     "cookie-parser": "^1.4.3",
     "express": "^4.14.0",
-    "morgan": "^1.7.0"
+    "morgan": "^1.7.0",
+    "mysql": "^2.13.0"
   }
 
 }
