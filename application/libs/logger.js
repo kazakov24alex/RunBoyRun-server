@@ -18,16 +18,14 @@ function getLogger(module) {
 
     // Create logger
     return  new winston.Logger({
-        level: 'debug',
         // Transports for logs
         transports : [
             new winston.transports.Console({
-                level: 'debug',
                 colorize: true,
+                level: 'debug',
                 timestamp: tsFormat,
                 label: path
             })
-
         ]
     });
 }

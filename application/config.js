@@ -11,7 +11,8 @@ var config = {
         port     : 8871,
         user     : 'kazakov24alex',
         password : 'uta8Z0NzXTdgv9l1',
-        database : 'runboyrun_db'
+        database : 'runboyrun_db',
+        dialect: 'mysql'
     }
 };
 
