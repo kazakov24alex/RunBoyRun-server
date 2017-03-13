@@ -4,10 +4,11 @@
 // ========================================
 
 
-var sequelize = require('./sequelize');
+var sequelize   = require('./sequelize');
+var logger      = require('./logger')(module);
+
+// Models of the Database
 var AthleteModel = require('./../models/athlete');
-var logger  = require('./logger')(module);
-var log     = require('../errors/logs');
 
 
 manager = {
@@ -18,11 +19,11 @@ manager = {
         sequelize
             .authenticate()
             .then(function () {
-                logger.info(log.db.CONNECTION_SUCCESS);
+                logger.info('CONNETCTION WITH DATABASE HAS BEEN ESTABLISHED SUCCESSFULLY');
                 manager.syncTables();
             })
-            .catch(function (err) {
-                logger.error(log.db.CONNECTION_FAILURE, err.message);
+            .catch(function (error) {
+                logger.error('CONNECTION TO THE DATABASE IS NOT ESTABLISHED: '+error.message);
                 process.exit(-1);
             });
     },

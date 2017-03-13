@@ -1,15 +1,16 @@
 
-
 // ========================================
 // DB Model for users
 // ========================================
 
 
 var Sequelize = require('sequelize');
+
 var sequelize = require('./../libs/sequelize');
+var config = require('../config');
 
 
-//Article table model in DB
+// 'Athlete' table model in MySQL DB
 var Athlete = sequelize.define('athlete', {
     name: {
         type: Sequelize.STRING(20),
@@ -30,8 +31,8 @@ var Athlete = sequelize.define('athlete', {
     role: {
         type:   Sequelize.ENUM,
         allowNull: false,
-        values: ['admin', 'user'],
-        defaultValue: 'user'
+        values: [config.role.admin, config.role.user],
+        defaultValue: config.role.user
     },
     birthday: {
         type: Sequelize.DATEONLY,
@@ -49,6 +50,3 @@ var Athlete = sequelize.define('athlete', {
 
 
 module.exports = Athlete;
-
-
-

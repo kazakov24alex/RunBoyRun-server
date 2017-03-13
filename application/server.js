@@ -4,15 +4,11 @@ var express     = require('express');
 var morgan      = require('morgan');
 var bodyParser  = require('body-parser');
 var path        = require('path');
-var mysql       = require('mysql');
 
 var config      = require('./config');
 var DBManager   = require('./libs/db_manager');
 var logger      = require('./libs/logger')(module);
 var auth        = require('./libs/auth');
-
-
-var Athlete     = require('./models/athlete');
 
 
 // Create express.js app
@@ -31,13 +27,12 @@ app.use(auth().initialize());
 DBManager.connect();
 
 
-
 // Routes
 var openRoutes = require('./routes/open');
 app.use('/', openRoutes);
 
 
-
+// Main web-page
 app.get('*', function (req, res){
     res.end('RunBoyRun server. Welcome!');
 });

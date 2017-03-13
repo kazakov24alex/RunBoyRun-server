@@ -15,6 +15,11 @@ var config = {
         dialect: 'mysql'
     },
 
+    role: {
+        user  : 'user',
+        admin : 'admin'
+    },
+
     token: {
         secret: '2AK',
         options : { session: false},

@@ -1,14 +1,14 @@
 
 // ========================================
-// Module for managing user accounts
+// Module for managing athlete accounts
 // ========================================
+
 
 var moment  = require('moment');
 var jwt     = require('jwt-simple');
 var bcrypt  = require('bcrypt');
 
 var AthleteModel = require('../models/athlete');
-var logger = require('./logger')(module);
 var config = require('../config');
 var errors = require('../errors/errors');
 
@@ -16,26 +16,10 @@ var errors = require('../errors/errors');
 module.exports = {
     // *****************************************************************************************************************
     // Create new user.
+    // On success: callback(null)
+    // On failure: callback(error)
     // *****************************************************************************************************************
     createUser : function (body, role, callback) {
-        if(!body.name) {
-            return(callback(errors.name.ERROR_INVALID_NAME));
-        } if(!body.surname) {
-            return(callback(new Error('Surname not defined')));
-        } if(!body.identificator) {
-            return(callback(new Error('Identificator not defined')));
-        } if(!body.password) {
-            return(callback(new Error('Password not defined')));
-        } if(!body.birthday) {
-            return(callback(new Error('Birthday not defined')));
-        } if(!body.country) {
-            return(callback(new Error('Country not defined')));
-        } if(!body.city) {
-            return(callback(new Error('City not defined')));
-        } if(role!='user' && role!='admin') {
-            return(callback(new Error('Incorrect role')))
-        }
-
 
         // Store hash in your password DB.
         bcrypt.hash(body.password, config.hash.saltRound, function(err, hashed_password) {
@@ -43,24 +27,22 @@ module.exports = {
                 return callback(err);
             }
 
+            // Create a record of 'Athlete' table
             AthleteModel.create({
-                name: body.name,
-                surname: body.surname,
-                identificator: body.identificator,
-                hashed_password: hashed_password,
-                role: role,
-                birthday: body.birthday,
-                country: body.country,
-                city: body.city
+                name:           body.name,
+                surname:        body.surname,
+                identificator:  body.identificator,
+                hashed_password:hashed_password,
+                role:           role,
+                birthday:       body.birthday,
+                country:        body.country,
+                city:           body.city
             }).then(function(result) {
                 if (!result[1]) {
-                    console.log('GOOD!');
                     return callback(null);
                 }
-
             }).catch(function(error) {
-                logger.error('BLAT. '+error.message);
-                return callback(err);
+                return callback(error);
             });
 
         });
@@ -68,33 +50,36 @@ module.exports = {
 
 
     // *****************************************************************************************************************
-    // Request token by username and password. On success attaches field token to user object
+    // Request token by identificator and password. On success attaches field token to athlete object.
+    // On success: callback(null, athlete)
+    // On failure: callback(error, null)
     // *****************************************************************************************************************
     requestToken  : function (identificator, password, callback) {
+        // Check availability of identificator and password
         if(!identificator) {
-            return callback(new Error('Login not defined'), null);
-        }
-        if(!password) {
-            return callback(new Error('Password not defined'), null);
+            return callback(errors.IDENTIFICATOR_IS_ABSENT, null);
+        } else if(!password) {
+            return callback(errors.PASSWORD_IS_ABSENT, null);
         }
 
+        // Find the athlete by identificator
         AthleteModel.findOne({
             where: {identificator: identificator}
         }).then(function(athlete) {
             if(!athlete) {
-                return callback(new Error('User ' + login + ' not found'), null);
+                return callback(errors.USER_NOT_FOUND, null);
             }
-            // password comparison
+
+            // Password comparison
             bcrypt.compare(password, athlete.hashed_password, function(err, res) {
                 if(err) {
                     return callback(err);
-                }
-                if(!res) {
-                    return callback(new Error('Incorrect password'), null);
+                }else if(!res) {
+                    return callback(errors.PASSWORD_IS_INCORRECT, null);
                 }
 
+                // Make and attach token
                 var expires = moment().add(config.token.life.amount, config.token.life.unit).valueOf();
-
                 athlete.token = jwt.encode({
                     id: athlete.id,
                     exp: expires
@@ -104,5 +89,6 @@ module.exports = {
             });
         });
     }
+
 
 };

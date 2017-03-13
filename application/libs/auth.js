@@ -1,13 +1,14 @@
 
-
 // ========================================
 // Module for user authentication
 // ========================================
 
-var passport = require('passport');
+
+var passport    = require('passport');
 var passportJwt = require('passport-jwt');
+
 var config = require('../config');
-var logger = require('./logger');
+var err    = require('../errors/errors');
 var AthleteModel = require('../models/athlete');
 
 
@@ -30,7 +31,7 @@ module.exports = function() {
         initialize: function () {
             var strategy = new Strategy(params, function (payload, done) {
                 if(payload.exp <= Date.now()) {
-                    return done(new Error("Token expired"), null);
+                    return done(err.USER_NOT_FOUND, null);
                 }
 
 
@@ -38,7 +39,7 @@ module.exports = function() {
                     where: {id: payload.id}
                 }).then(function(athlete) {
                     if(!athlete) {
-                        return done(new Error("User not found", null));
+                        return done(err.USER_NOT_FOUND, null);
                     }
 
                     done(null, athlete);
