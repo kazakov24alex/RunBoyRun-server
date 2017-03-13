@@ -7,7 +7,7 @@
 var sequelize = require('./sequelize');
 var AthleteModel = require('./../models/athlete');
 var logger  = require('./logger')(module);
-var log     = require('../logs');
+var log     = require('../errors/logs');
 
 
 manager = {
@@ -17,7 +17,7 @@ manager = {
     connect : function () {
         sequelize
             .authenticate()
-            .then(function (err) {
+            .then(function () {
                 logger.info(log.db.CONNECTION_SUCCESS);
                 manager.syncTables();
             })

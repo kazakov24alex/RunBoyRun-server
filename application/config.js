@@ -13,6 +13,19 @@ var config = {
         password : 'uta8Z0NzXTdgv9l1',
         database : 'runboyrun_db',
         dialect: 'mysql'
+    },
+
+    token: {
+        secret: '2AK',
+        options : { session: false},
+        life : {
+            amount : 7,
+            unit : 'days'
+        }
+    },
+
+    hash: {
+        saltRound: 10
     }
 };
 
