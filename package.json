@@ -1,10 +1,15 @@
 {
   "name": "RunBoyRun-server",
   "version": "0.0.2",
+  "contributors": [
+      "Alex Kazakov <kazakov24alex@gmail.com> (http://vk.com/kazakov24alex)",
+      "Alex Kupriyanov"
+  ],
+
   "private": true,
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node application/server.js"
   },
   "repository": {
     "type": "git",

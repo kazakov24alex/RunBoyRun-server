@@ -13,7 +13,7 @@ var config = require('../config');
 var auth   = require('../libs/auth');
 
 
-// Registration of new User
+// Registration of new Athlete
 router.post('/signup', function (req, res) {
     athleteManager.createUser(req.body, config.role.user, function (err) {
         if(err) {
@@ -32,6 +32,21 @@ router.post('/signup', function (req, res) {
         }
     })
 });
+
+
+// Login of Athlete
+router.post('/signin', function (req, res) {
+   athleteManager.requestToken(req.body.identificator, req.body.password, function(err, athlete) {
+       if(err) {
+           res.json({success: false, error: err.message}).end();
+           logger.warn('Login athlete '+req.body.identificator+' error: '+err.message);
+       } else {
+           res.json({success: true, token: athlete.token}).end();
+           logger.info('Login athlete: '+athlete.name+' '+athlete.surname);
+       }
+   })
+});
+
 
 
 // TODO: TEMPORARILY
