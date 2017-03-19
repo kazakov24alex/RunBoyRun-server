@@ -21,7 +21,7 @@ function getLogger(module) {
         // Transports for logs
         transports : [
             new winston.transports.Console({
-                colorize: true,
+                colorize: false,
                 level: 'debug',
                 timestamp: tsFormat,
                 label: path

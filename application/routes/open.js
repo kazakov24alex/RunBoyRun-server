@@ -48,6 +48,19 @@ router.post('/signin', function (req, res) {
 });
 
 
+// Check identificator
+router.post('/check', function (req, res) {
+    athleteManager.checkIdentificator(req.body.identificator, function(err) {
+       if(err) {
+           res.json({success: false, error: err.message}).end();
+           logger.warn('Identificator '+req.body.identificator+' checking error: '+err.message);
+       } else {
+           res.json({success: true, busy: true}).end();
+           logger.info('Identificator '+req.body.identificator+' checking successfully');
+       }
+    });
+});
+
 
 // TODO: TEMPORARILY
 // Autharization of new User

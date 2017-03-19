@@ -57,9 +57,9 @@ module.exports = {
     requestToken  : function (identificator, password, callback) {
         // Check availability of identificator and password
         if(!identificator) {
-            return callback(errors.IDENTIFICATOR_IS_ABSENT, null);
+            return callback(new Error(errors.IDENTIFICATOR_IS_ABSENT, null));
         } else if(!password) {
-            return callback(errors.PASSWORD_IS_ABSENT, null);
+            return callback(new Error(errors.PASSWORD_IS_ABSENT, null));
         }
 
         // Find the athlete by identificator
@@ -67,7 +67,7 @@ module.exports = {
             where: {identificator: identificator}
         }).then(function(athlete) {
             if(!athlete) {
-                return callback(errors.USER_NOT_FOUND, null);
+                return callback(new Error(errors.USER_NOT_FOUND, null));
             }
 
             // Password comparison
@@ -75,7 +75,7 @@ module.exports = {
                 if(err) {
                     return callback(err);
                 }else if(!res) {
-                    return callback(errors.PASSWORD_IS_INCORRECT, null);
+                    return callback(new Error(errors.PASSWORD_IS_INCORRECT, null));
                 }
 
                 // Make and attach token
@@ -87,6 +87,29 @@ module.exports = {
 
                 callback(null, athlete);
             });
+        });
+    },
+
+
+    // *****************************************************************************************************************
+    // Check the existence of the identifier.
+    // On success: callback(null)
+    // On failure: callback(err)
+    // *****************************************************************************************************************
+    checkIdentificator  : function (identificator, callback) {
+        if (!identificator) {
+            return callback(new Error(errors.IDENTIFICATOR_IS_ABSENT));
+        }
+
+        // Find the athlete by identificator
+        AthleteModel.findOne({
+            where: {identificator: identificator}
+        }).then(function (athlete) {
+            if (!athlete) {
+                return callback(new Error(errors.IDENTIFICATOR_IS_BUSY));
+            } else {
+                return callback(null);
+            }
         });
     }
 
