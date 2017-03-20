@@ -1,6 +1,8 @@
 
 
 var error = {
+    COUNTRY_GET_ERROR:          "COUNTRY_GET_ERROR",
+    CITY_GET_ERROR:             "CITY_GET_ERROR",
 
     USER_NOT_FOUND:             "USER_NOT_FOUND",
     IDENTIFICATOR_IS_ABSENT:    "IDENTIFICATOR_IS_ABSENT",

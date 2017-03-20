@@ -12,40 +12,44 @@ var config = require('../config');
 
 // 'Athlete' table model in MySQL DB
 var Athlete = sequelize.define('athlete', {
-    name: {
+    Name: {
         type: Sequelize.STRING(20),
         allowNull: false
     },
-    surname: {
+    Surname: {
         type: Sequelize.STRING(20),
         allowNull: false
     },
-    identificator: {
+    Identificator: {
         type: Sequelize.STRING(100),
         allowNull: false
     },
-    hashed_password: {
+    Hashed_password: {
         type: Sequelize.STRING,
         allowNull: false
     },
-    role: {
-        type:   Sequelize.ENUM,
+    Role: {
+        type: Sequelize.ENUM,
         allowNull: false,
         values: [config.role.admin, config.role.user],
         defaultValue: config.role.user
     },
-    birthday: {
+    Birthday: {
         type: Sequelize.DATEONLY,
         allowNull: false
     },
-    country: {
+    Country: {
         type: Sequelize.STRING(30),
         allowNull: false
     },
-    city: {
+    City: {
         type: Sequelize.STRING(30),
         allowNull: false
     }
+},{
+    tableName: 'athlete',
+    createdAt: true,
+    updatedAt: true
 });
 
 

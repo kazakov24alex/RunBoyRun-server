@@ -8,8 +8,11 @@ var express = require('express');
 var router = express.Router();
 
 var athleteManager = require('../libs/athlete_manager');
+var countryManager = require('../libs/country_manager');
+
 var logger = require('../libs/logger')(module);
 var config = require('../config');
+var errors = require('../errors/errors');
 var auth   = require('../libs/auth');
 
 
@@ -61,6 +64,33 @@ router.post('/check', function (req, res) {
     });
 });
 
+
+// Get counties list
+router.get('/countries', function (req, res) {
+    countryManager.getCountries(function(err, countries) {
+        if(err) {
+            res.json({success: false, error: err.message}).end();
+            logger.warn(errors.COUNTRY_GET_ERROR);
+        } else {
+            res.json({success: true, countries: countries}).end();
+            logger.info('Request a list of countries that passed successfully');
+        }
+    })
+});
+
+
+// Get cities list
+router.post('/cities', function (req, res) {
+    countryManager.getCities(req.body.country, function(err, cities) {
+        if(err) {
+            res.json({success: false, error: err.message}).end();
+            logger.warn(errors.CITY_GET_ERROR);
+        } else {
+            res.json({success: true, countries: cities}).end();
+            logger.info('Request a list of cities that passed successfully');
+        }
+    })
+});
 
 // TODO: TEMPORARILY
 // Autharization of new User
