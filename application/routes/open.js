@@ -80,8 +80,8 @@ router.get('/countries', function (req, res) {
 
 
 // Get cities list
-router.post('/cities', function (req, res) {
-    countryManager.getCities(req.body.country, function(err, cities) {
+router.get('/cities/:countryCode', function (req, res) {
+    countryManager.getCities(req.params.countryCode, function(err, cities) {
         if(err) {
             res.json({success: false, error: err.message}).end();
             logger.warn(errors.CITY_GET_ERROR);

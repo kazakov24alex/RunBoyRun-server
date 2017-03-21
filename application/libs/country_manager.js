@@ -38,24 +38,19 @@ module.exports = {
     // On success: callback(null, cities[])
     // On failure: callback(err, null)
     // *****************************************************************************************************************
-    getCities : function (country, callback) {
-        CountryModel.findOne({
-            where: { Name: country }
-        }).then(function (countryObj) {
-
-            CityModel.findAll({
-               where: { CountryCode: countryObj.Code }
-            }).then(function (cities) {
-            var nameArr = [];
+    getCities : function (countryCode, callback) {
+        CityModel.findAll({
+           where: { CountryCode: countryCode }
+        }).then(function (cities) {
+            var cityList = [];
             cities.forEach(function(item, i, cities) {
-                var cityJSON;
-                cityJSON.name = item.Name;
-                cityJSON.
-                nameArr.push(cityJSON);
+                var cityJSON = {
+                    name: item.Name,
+                    code: item.ID
+                };
+                cityList.push(cityJSON);
             });
-            return callback(null, nameArr);
-        });
-
+            return callback(null, cityList);
         }).catch(function (err) {
             return callback(err, null);
         });
