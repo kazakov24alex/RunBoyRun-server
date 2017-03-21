@@ -20,7 +20,9 @@ module.exports = {
         }).then(function (countries) {
             var nameArr = [];
             countries.forEach(function(item, i, countries) {
-                nameArr.push(item.Name);
+                var countryJSON = new Object()
+                countryJSON.name = item.Name;
+                nameArr.push(countryJSON);
             });
             return callback(null, nameArr);
         }).catch(function (err) {
@@ -44,7 +46,9 @@ module.exports = {
             }).then(function (cities) {
             var nameArr = [];
             cities.forEach(function(item, i, cities) {
-                nameArr.push(item.Name);
+                var cityJSON;
+                cityJSON.name = item.Name;
+                nameArr.push(cityJSON);
             });
             return callback(null, nameArr);
         });
