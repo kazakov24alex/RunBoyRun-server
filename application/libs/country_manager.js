@@ -18,13 +18,15 @@ module.exports = {
         CountryModel.findAll({
             where: { }
         }).then(function (countries) {
-            var nameArr = [];
+            var countriesList = [];
             countries.forEach(function(item, i, countries) {
-                var countryJSON = new Object()
-                countryJSON.name = item.Name;
-                nameArr.push(countryJSON);
+                var countryJSON = {
+                    name: item.Name,
+                    code: item.Code
+                };
+                countriesList.push(countryJSON);
             });
-            return callback(null, nameArr);
+            return callback(null, countriesList);
         }).catch(function (err) {
             return callback(err, null);
         });
@@ -48,6 +50,7 @@ module.exports = {
             cities.forEach(function(item, i, cities) {
                 var cityJSON;
                 cityJSON.name = item.Name;
+                cityJSON.
                 nameArr.push(cityJSON);
             });
             return callback(null, nameArr);
