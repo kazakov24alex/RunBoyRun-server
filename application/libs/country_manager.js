@@ -50,7 +50,7 @@ module.exports = {
             cities.forEach(function(item, i, cities) {
                 var cityJSON = {
                     name: item.Name,
-                    code: item.ID
+                    id: item.ID
                 };
                 cityList.push(cityJSON);
             });
