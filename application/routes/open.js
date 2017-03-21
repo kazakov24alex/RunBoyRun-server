@@ -86,7 +86,7 @@ router.get('/cities/:countryCode', function (req, res) {
             res.json({success: false, error: errors.CITY_GET_ERROR}).end();
             logger.warn(errors.CITY_GET_ERROR + ": " + err.message);
         } else {
-            res.json({success: true, countries: cities}).end();
+            res.json({success: true, cities: cities}).end();
             logger.info('Request a list of cities that passed successfully');
         }
     })
