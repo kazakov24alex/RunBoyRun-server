@@ -6,6 +6,7 @@
 
 var CountryModel = require('../models/country');
 var CityModel    = require('../models/city');
+var errors       = require('../errors/errors');
 
 
 module.exports = {
@@ -42,6 +43,9 @@ module.exports = {
         CityModel.findAll({
            where: { CountryCode: countryCode }
         }).then(function (cities) {
+            if(cities == '')
+                return callback(new Error(errors.CITY_GET_ERROR), null);
+
             var cityList = [];
             cities.forEach(function(item, i, cities) {
                 var cityJSON = {

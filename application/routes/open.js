@@ -69,8 +69,8 @@ router.post('/check', function (req, res) {
 router.get('/countries', function (req, res) {
     countryManager.getCountries(function(err, countries) {
         if(err) {
-            res.json({success: false, error: err.message}).end();
-            logger.warn(errors.COUNTRY_GET_ERROR);
+            res.json({success: false, error: errors.COUNTRY_GET_ERROR}).end();
+            logger.warn(errors.COUNTRY_GET_ERROR + ": " + err.message);
         } else {
             res.json({success: true, countries: countries}).end();
             logger.info('Request a list of countries that passed successfully');
@@ -83,8 +83,8 @@ router.get('/countries', function (req, res) {
 router.get('/cities/:countryCode', function (req, res) {
     countryManager.getCities(req.params.countryCode, function(err, cities) {
         if(err) {
-            res.json({success: false, error: err.message}).end();
-            logger.warn(errors.CITY_GET_ERROR);
+            res.json({success: false, error: errors.CITY_GET_ERROR}).end();
+            logger.warn(errors.CITY_GET_ERROR + ": " + err.message);
         } else {
             res.json({success: true, countries: cities}).end();
             logger.info('Request a list of cities that passed successfully');
