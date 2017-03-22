@@ -26,7 +26,7 @@ module.exports = {
             if (err){
                 return callback(err);
             }
-
+                console.log(body.name, body.surname, body.identificator, body.birthday, body.country, body.city, role, hashed_password);
             // Create a record of 'Athlete' table
             AthleteModel.create({
                 name:           body.name,

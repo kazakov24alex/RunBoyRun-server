@@ -22,7 +22,8 @@ var Athlete = sequelize.define('athlete', {
     },
     Identificator: {
         type: Sequelize.STRING(100),
-        allowNull: false
+        allowNull: false,
+        primaryKey: true
     },
     Hashed_password: {
         type: Sequelize.STRING,
@@ -47,9 +48,7 @@ var Athlete = sequelize.define('athlete', {
         allowNull: false
     }
 },{
-    tableName: 'athlete',
-    createdAt: true,
-    updatedAt: true
+    tableName: 'athlete'
 });
 
 
