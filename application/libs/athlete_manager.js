@@ -39,7 +39,16 @@ module.exports = {
             };
 
             // Create a record of 'Athlete' table
-            AthleteModel.create(athlete).then(function(result) {
+            AthleteModel.create({
+                name:           body.name,
+                surname:        body.surname,
+                identificator:  body.identificator,
+                hashed_password:hashed_password,
+                role:           role,
+                birthday:       body.birthday,
+                country:        body.country,
+                city:           body.city
+            }).then(function(result) {
                 if (!result[1]) {
                     return callback(null);
                 }
