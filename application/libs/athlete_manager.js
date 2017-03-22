@@ -26,18 +26,20 @@ module.exports = {
             if (err){
                 return callback(err);
             }
+            console.log(body.name, body.surname, body.identificator, hashed_password, role, body.birthday, body.country, body.city);
+            var athlete = {
+                Name:           'VLADIMIR',
+                Surname:        'PUTIN',
+                Identificator:  body.identificator,
+                Hashed_password:hashed_password,
+                Role:           role,
+                Birthday:       body.birthday,
+                Country:        body.country,
+                City:           body.city
+            };
 
             // Create a record of 'Athlete' table
-            AthleteModel.create({
-                name:           body.name,
-                surname:        body.surname,
-                identificator:  body.identificator,
-                hashed_password:hashed_password,
-                role:           role,
-                birthday:       body.birthday,
-                country:        body.country,
-                city:           body.city
-            }).then(function(result) {
+            AthleteModel.create(athlete).then(function(result) {
                 if (!result[1]) {
                     return callback(null);
                 }

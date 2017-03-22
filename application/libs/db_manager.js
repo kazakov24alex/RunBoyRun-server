@@ -91,23 +91,6 @@ manager = {
 */
 
 
-        var execsql = require('execsql'),
-            dbConfig = {
-                host: 'k236.net',
-                user: 'kazakov24alex',
-                password: 'uta8Z0NzXTdgv9l1'
-            },
-            sql = 'use runboyrun_db;',
-            sqlFile = __dirname + '/../data/world.sql';
-        execsql.config(dbConfig)
-            .exec(sql)
-            .execFile(sqlFile, function(err, results){
-                if(err) {
-                    console.log('ERROR = '+err)
-                } else {
-                    console.log(results);
-                }
-            }).end();
 
 
     }

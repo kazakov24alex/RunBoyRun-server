@@ -22,7 +22,9 @@ var Athlete = sequelize.define('athlete', {
     },
     Identificator: {
         type: Sequelize.STRING(100),
-        allowNull: false
+        allowNull: false,
+        primaryKey: true,
+        unique: true
     },
     Hashed_password: {
         type: Sequelize.STRING,
