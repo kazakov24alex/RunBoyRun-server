@@ -36,6 +36,12 @@ var Athlete = sequelize.define('athlete', {
         values: [config.role.admin, config.role.user],
         defaultValue: config.role.user
     },
+    Sex: {
+        type: Sequelize.ENUM,
+        allowNull: false,
+        values: ["male", "famale"],
+        defaultValue: "male"
+    },
     Birthday: {
         type: Sequelize.DATEONLY,
         allowNull: false

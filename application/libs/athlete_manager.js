@@ -34,6 +34,7 @@ module.exports = {
                 Identificator:  body.identificator,
                 Hashed_password:hashed_password,
                 Role:           role,
+                Sex:            body.sex,
                 Birthday:       body.birthday,
                 Country:        body.country,
                 City:           body.city
