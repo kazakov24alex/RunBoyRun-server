@@ -34,7 +34,7 @@ VKAccountManager = {
 
     checkTokenVkUser: function (userAccessToken, callback) {
         var rp = require('request-promise');
-        var appAccessToken;
+        var appAccessToken = null;
 
         var getAppTokenRequest = {
             method: 'GET',
@@ -46,7 +46,8 @@ VKAccountManager = {
 
         rp(getAppTokenRequest)
             .then(function (parsedBody) {
-                if (parsedBody.success == "true") {
+                if (parsedBody.access_token != null) {
+                    appAccessToken = parsedBody.access_token;
 
                     var checkUserTokenRequest = {
                         method: 'GET',
@@ -57,7 +58,7 @@ VKAccountManager = {
 
                     rp(checkUserTokenRequest)
                         .then(function (parsedBody) {
-                            if (parsedBody.success == "true") {
+                            if (parsedBody.response.success == "1") {
                                 return callback(null);
                             } else {
                                 return callback(new Error(errors.VK_USER_ACCESSTOKEN_IS_EXPIRED));
