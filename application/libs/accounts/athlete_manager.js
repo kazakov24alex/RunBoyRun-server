@@ -8,12 +8,24 @@ var moment  = require('moment');
 var jwt     = require('jwt-simple');
 var bcrypt  = require('bcrypt');
 
-var AthleteModel = require('../models/athlete');
-var config = require('../config');
-var errors = require('../errors/errors');
+var AthleteModel = require('../../models/athlete');
+var config = require('../../config');
+var errors = require('../../errors/errors');
 
 
-module.exports = {
+athleteManager = {
+
+    //callback(token or null)
+    getToken : function (identificator, callback) {
+        // Make and attach token
+        var expires = moment().add(config.token.life.amount, config.token.life.unit).valueOf();
+        var token = jwt.encode({
+            identificator: identificator,
+            exp: expires
+        }, config.token.secret);
+        return callback(token)
+    },
+
     // *****************************************************************************************************************
     // Create new user.
     // On success: callback(null)
@@ -42,9 +54,7 @@ module.exports = {
                 if (!result[1]) {
                     return callback(null);
                 }
-            }).catch(function(error) {
-                return callback(error);
-            });
+            })
 
         });
     },
@@ -79,14 +89,9 @@ module.exports = {
                     return callback(new Error(errors.PASSWORD_IS_INCORRECT, null));
                 }
 
-                // Make and attach token
-                var expires = moment().add(config.token.life.amount, config.token.life.unit).valueOf();
-                athlete.token = jwt.encode({
-                    id: athlete.id,
-                    exp: expires
-                }, config.token.secret);
+                // TODO: call getToken
 
-                callback(null, athlete);
+                return callback(null, athlete);
             });
         });
     },
@@ -116,3 +121,5 @@ module.exports = {
 
 
 };
+
+module.exports = athleteManager;

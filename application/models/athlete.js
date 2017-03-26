@@ -11,7 +11,7 @@ var config = require('../config');
 
 
 // 'Athlete' table model in MySQL DB
-var Athlete = sequelize.define('athlete', {
+var AthleteModel = sequelize.define('athlete', {
     Name: {
         type: Sequelize.STRING(20),
         allowNull: false
@@ -55,10 +55,8 @@ var Athlete = sequelize.define('athlete', {
         allowNull: false
     }
 },{
-    tableName: 'athlete',
-    createdAt: true,
-    updatedAt: true
+    tableName: 'athlete'
 });
 
 
-module.exports = Athlete;
+module.exports = AthleteModel;

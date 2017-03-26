@@ -36,7 +36,7 @@ module.exports = function() {
 
 
                 AthleteModel.findOne({
-                    where: {id: payload.id}
+                    where: {Identificator: payload.identificator}
                 }).then(function(athlete) {
                     if(!athlete) {
                         return done(err.USER_NOT_FOUND, null);

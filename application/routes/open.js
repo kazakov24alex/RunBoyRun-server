@@ -7,7 +7,7 @@
 var express = require('express');
 var router = express.Router();
 
-var athleteManager = require('../libs/athlete_manager');
+var accountAdapter = require('../libs/accounts/account_adapter');
 var countryManager = require('../libs/country_manager');
 
 var logger = require('../libs/logger')(module);
@@ -18,20 +18,13 @@ var auth   = require('../libs/auth');
 
 // Registration of new Athlete
 router.post('/signup', function (req, res) {
-    athleteManager.createUser(req.body, config.role.user, function (err) {
+    accountAdapter.adapterCreateUser(req.body, "user", function(err, token) {
         if(err) {
+            logger.warn('Registration athlete '+req.body.oauth.toUpperCase()+": "+req.body.identificator+' error: '+err);
             res.json({success: false, error: err.message}).end();
-            logger.warn('Creating athlete '+req.body.name+' '+req.body.surname+' error: '+err.message);
-        }  else {
-            athleteManager.requestToken(req.body.identificator, req.body.password, function(err, athlete) {
-                if(err) {
-                    res.json({success: false, error: err.message}).end();
-                    logger.warn('Requesting token error (create athlete): '+err.message);
-                } else {
-                    res.json({success: true, token: athlete.token}).end();
-                    logger.info('Created new athlete: '+req.body.name+' '+req.body.surname);
-                }
-            });
+        } else {
+            logger.info('Athlete '+req.body.identificator+" was successfully registered");
+            res.json({success: true, token: token}).end();
         }
     })
 });
@@ -39,7 +32,7 @@ router.post('/signup', function (req, res) {
 
 // Login of Athlete
 router.post('/signin', function (req, res) {
-   athleteManager.requestToken(req.body.identificator, req.body.password, function(err, athlete) {
+   accountAdapter.requestToken(req.body.identificator, req.body.password, function(err, athlete) {
        if(err) {
            res.json({success: false, error: err.message}).end();
            logger.warn('Login athlete '+req.body.identificator+' error: '+err.message);
@@ -53,7 +46,7 @@ router.post('/signin', function (req, res) {
 
 // Check identificator
 router.post('/check', function (req, res) {
-    athleteManager.checkIdentificator(req.body.identificator, function(err) {
+    accountAdapter.checkIdentificator(req.body.identificator, function(err) {
        if(err) {
            res.json({success: false, error: err.message}).end();
            logger.warn('Identificator '+req.body.identificator+' checking error: '+err.message);

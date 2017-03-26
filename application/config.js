@@ -34,6 +34,11 @@ const config = {
 
     hash: {
         saltRound: 10
+    },
+
+    vk: {
+        appId     : '5944334',
+        appSecret : '3LfvjuUCjH1gcp3iUUkI'
     }
 };
 
