@@ -8,6 +8,7 @@ var express = require('express');
 var router = express.Router();
 
 var accountAdapter = require('../libs/accounts/account_adapter');
+var athleteManager = require('../libs/accounts/athlete_manager');
 var countryManager = require('../libs/country_manager');
 
 var logger = require('../libs/logger')(module);
@@ -46,7 +47,7 @@ router.post('/signin', function (req, res) {
 
 // Check identificator
 router.post('/check', function (req, res) {
-    accountAdapter.checkIdentificator(req.body.identificator, function(err) {
+    athleteManager.checkIdentificator(req.body.identificator, function(err) {
        if(err) {
            res.json({success: false, error: err.message}).end();
            logger.warn('Identificator '+req.body.identificator+' checking error: '+err.message);
