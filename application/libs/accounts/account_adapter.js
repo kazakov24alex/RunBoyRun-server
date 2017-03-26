@@ -12,36 +12,97 @@ var errors = require('../../errors/errors');
 
 
 accountAdapter = {
-    // callback(err, token)
+
+    // *****************************************************************************************************************
+    // Distributes registration requests for certain types (own, VK, Google, Facebook).
+    // On success: callback(null, token)
+    // On failure: callback(error, null)
+    // *****************************************************************************************************************
     adapterCreateUser : function (body, role, callback) {
-        if(body.oauth == "own") {
-            athleteManager.createUser(body, role, function (err) {
-                if(err) {
-                    return callback(err, null);
-                } else {
-                    athleteManager.getToken(body.identificator, function (token) {
-                        return callback(null, token);
-                    });
-                }
-            });
 
-        } else if(body.oauth == "vk") {
-            body.identificator = "vk.com/id"+body.identificator;
-            vkAccountManager.createVkUser(body, role, function(err, token) {
-                if(err) {
-                    return callback(err, null);
-                } else {
-                    return callback(null, token)
-                }
-            });
+        switch(body.oauth) {
+            case "own":
+                athleteManager.createUser(body, role, function (err) {
+                    if(err) {
+                        return callback(err, null);
+                    } else {
+                        athleteManager.getToken(body.identificator, function (token) {
+                            return callback(null, token);
+                        });
+                    }
+                });
+                break;
 
-        } else if(body.oauth == "google") {
+            case config.vk.name:
+                body.identificator = config.vk.prefix + body.identificator;
+                vkAccountManager.createVkUser(body, role, function(err, token) {
+                    if(err) {
+                        return callback(err, null);
+                    } else {
+                        return callback(null, token)
+                    }
+                });
+                break;
 
-        } else if(body.oauth == "facebook") {
+            case config.google.name:
+                // TODO: GOOGLE REGISTRATION
+                break;
 
-        } else {
-            return callback(new Error(errors.OAUTH_NOT_DEFINED), null);
+            case config.facebook.name:
+                // TODO: FACEBOOK REGISTRATION
+                break;
+
+            default:
+                return callback(new Error(errors.OAUTH_NOT_DEFINED), null);
+                break;
         }
+
+    },
+
+
+    // *****************************************************************************************************************
+    // Distributes login requests for certain types (own, VK, Google, Facebook).
+    // On success: callback(null, token)
+    // On failure: callback(error, null)
+    // *****************************************************************************************************************
+    adapterLoginUser : function (body, callback) {
+
+        switch(body.oauth) {
+            case "own":
+                athleteManager.requestTokenByPassword(body.identificator, body.password, function (err, token) {
+                    if(err) {
+                        return callback(err, null);
+                    } else {
+                        athleteManager.getToken(body.identificator, function (token) {
+                            return callback(null, token);
+                        });
+                    }
+                });
+                break;
+
+            case config.vk.name:
+                vkAccountManager.loginVkUser(body, function(err, token) {
+                    if(err) {
+                        return callback(err, null);
+                    } else {
+                        return callback(null, token)
+                    }
+                });
+                break;
+
+            case config.google.name:
+                // TODO: GOOGLE LOGIN
+                break;
+
+            case config.facebook.name:
+                // TODO: FACEBOOK LOGIN
+                break;
+
+            default:
+                return callback(new Error(errors.OAUTH_NOT_DEFINED), null);
+                break;
+        }
+
     }
 
 };

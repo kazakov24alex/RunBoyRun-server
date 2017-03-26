@@ -33,13 +33,13 @@ router.post('/signup', function (req, res) {
 
 // Login of Athlete
 router.post('/signin', function (req, res) {
-   accountAdapter.requestToken(req.body.identificator, req.body.password, function(err, athlete) {
+   accountAdapter.adapterLoginUser(req.body, function(err, token) {
        if(err) {
            res.json({success: false, error: err.message}).end();
            logger.warn('Login athlete '+req.body.identificator+' error: '+err.message);
        } else {
-           res.json({success: true, token: athlete.token}).end();
-           logger.info('Login athlete: '+athlete.name+' '+athlete.surname);
+           res.json({success: true, token: token}).end();
+           logger.info('Login athlete: '+req.body.identificator);
        }
    })
 });

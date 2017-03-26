@@ -15,7 +15,11 @@ var errors = require('../../errors/errors');
 
 athleteManager = {
 
-    //callback(token or null)
+    // *****************************************************************************************************************
+    // Get new token by identificator.
+    // On success: callback(token)
+    // On failure: callback(null)
+    // *****************************************************************************************************************
     getToken : function (identificator, callback) {
         // Make and attach token
         var expires = moment().add(config.token.life.amount, config.token.life.unit).valueOf();
@@ -39,7 +43,7 @@ athleteManager = {
                 return callback(err);
             }
 
-            // Create a record of 'Athlete' table
+            // Create a record of 'athlete' table
             AthleteModel.create({
                 Name:           body.name,
                 Surname:        body.surname,
@@ -54,7 +58,9 @@ athleteManager = {
                 if (!result[1]) {
                     return callback(null);
                 }
-            })
+            }).catch(function(error) {
+                return callback(error);
+            });
 
         });
     },
@@ -65,7 +71,7 @@ athleteManager = {
     // On success: callback(null, athlete)
     // On failure: callback(error, null)
     // *****************************************************************************************************************
-    requestToken  : function (identificator, password, callback) {
+    requestTokenByPassword  : function (identificator, password, callback) {
         // Check availability of identificator and password
         if(!identificator) {
             return callback(new Error(errors.IDENTIFICATOR_IS_ABSENT, null));
