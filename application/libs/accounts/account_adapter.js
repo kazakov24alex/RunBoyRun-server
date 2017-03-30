@@ -6,6 +6,7 @@
 
 var athleteManager = require('./athlete_manager');
 var vkAccountManager = require('./vk_account_manager');
+var googleAccountManager = require('./google_account_manager');
 var facebookAccountManager = require('./facebook_account_manager');
 
 var config = require('../../config');
@@ -46,7 +47,14 @@ accountAdapter = {
                 break;
 
             case config.google.name:
-                // TODO: GOOGLE REGISTRATION
+                body.identificator = config.google.prefix + body.identificator;
+                googleAccountManager.createGoogleUser(body, role, function(err, token) {
+                    if(err) {
+                        return callback(err, null);
+                    } else {
+                        return callback(null, token)
+                    }
+                });
                 break;
 
             case config.facebook.name:
@@ -99,11 +107,17 @@ accountAdapter = {
                 break;
 
             case config.google.name:
-
+                googleAccountManager.loginGoogleUser(body, function(err, token) {
+                    if(err) {
+                        return callback(err, null);
+                    } else {
+                        return callback(null, token)
+                    }
+                });
                 break;
 
             case config.facebook.name:
-                facebookAccountManager.loginFaceBookUser(body, function(err, token) {
+                facebookAccountManager.loginFacebookUser(body, function(err, token) {
                     if(err) {
                         return callback(err, null);
                     } else {

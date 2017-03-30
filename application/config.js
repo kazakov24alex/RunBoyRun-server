@@ -41,7 +41,8 @@ const config = {
     },
 
     google: {
-        name    : 'google'
+        name    : 'google',
+        prefix  : 'plus.google.com/'
     },
 
     facebook: {
