@@ -45,7 +45,8 @@ const config = {
     },
 
     facebook: {
-        name    : 'facebook'
+        name    : 'facebook',
+        prefix  : 'facebook.com/'
     }
 
 };

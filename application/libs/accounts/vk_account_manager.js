@@ -55,7 +55,7 @@ VKAccountManager = {
                 // ckeck existance of athlete with this VK ID
                 athleteManager.checkIdentificator(config.vk.prefix+body.identificator, function (err) {
                    if(err) {
-                       return callback(err, null);
+                       return callback(new Error(errors.VK_USER_NOT_REGISTRED), null);
                    } else {
                        // get token
                        athleteManager.getToken(body.identificator, function (token) {
@@ -115,7 +115,7 @@ VKAccountManager = {
                             }
                         })
                         .catch(function (err) {
-                            return callback(err);
+                            return callback(err, null);
                         });
                 } else {
                     return callback(new Error(errors.VK_APP_ACCESSTOKEN_NOT_GOT), null);
