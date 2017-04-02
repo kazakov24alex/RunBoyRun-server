@@ -146,21 +146,22 @@ accountAdapter = {
                 break;
 
             case config.vk.name:
-                body.identificator = body.identificator+config.vk.prefix;
+                body.identificator = config.vk.prefix+body.identificator;
                 break;
 
             case config.google.name:
-                body.identificator = body.identificator+config.google.prefix;
+                body.identificator = config.google.prefix+body.identificator;
                 break;
 
             case config.facebook.name:
-                body.identificator = body.identificator+config.facebook.prefix;
+                body.identificator = config.facebook.prefix+body.identificator;
                 break;
 
             default:
                 return callback(new Error(errors.OAUTH_INCORRECT));
                 break;
         }
+
 
         athleteManager.checkIdentificator(body.identificator, function(err) {
             if(err) {
