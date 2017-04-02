@@ -13,7 +13,7 @@ var config      = require('../config');
 var AthleteModel    = require('./../models/athlete');
 var CityModel       = require('./../models/city');
 var CountryModel    = require('./../models/country');
-var CountryLangModel= require('./../models/countryLanguage') ;
+var CountryLangModel= require('./../models/country_language') ;
 
 manager = {
     // *****************************************************************************************************************
@@ -89,8 +89,6 @@ manager = {
 
 
 */
-
-
 
 
     }

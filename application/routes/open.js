@@ -7,9 +7,9 @@
 var express = require('express');
 var router = express.Router();
 
-var accountAdapter = require('../libs/accounts/account_adapter');
-var athleteManager = require('../libs/accounts/athlete_manager');
-var countryManager = require('../libs/country_manager');
+var accountAdapter = require('./account_adapter');
+var athleteManager = require('./athlete_manager');
+var countryManager = require('../libs/managers/country_manager');
 
 var logger = require('../libs/logger')(module);
 var config = require('../config');

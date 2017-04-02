@@ -6,7 +6,7 @@ var bodyParser  = require('body-parser');
 var path        = require('path');
 
 var config      = require('./config');
-var DBManager   = require('./libs/db_manager');
+var DBManager   = require('./libs/database');
 var logger      = require('./libs/logger')(module);
 var auth        = require('./libs/auth');
 

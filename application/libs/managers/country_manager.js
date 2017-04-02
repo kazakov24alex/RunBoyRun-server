@@ -4,9 +4,9 @@
 // ========================================
 
 
-var CountryModel = require('../models/country');
-var CityModel    = require('../models/city');
-var errors       = require('../errors/errors');
+var CountryModel = require('../../models/country');
+var CityModel    = require('../../models/city');
+var errors       = require('../../errors/errors');
 
 
 module.exports = {

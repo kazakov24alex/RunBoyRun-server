@@ -1,13 +1,13 @@
 
 // ========================================
-// Module for managing athlete accounts
+// Module for managing athlete socialnetworks
 // ========================================
 
 
 var athleteManager = require('./athlete_manager');
-var vkAccountManager = require('./vk_account_manager');
-var googleAccountManager = require('./google_account_manager');
-var facebookAccountManager = require('./facebook_account_manager');
+var vkAccountManager = require('./../socialnetworks/vk_account_manager');
+var googleAccountManager = require('./../socialnetworks/google_account_manager');
+var facebookAccountManager = require('./../socialnetworks/facebook_account_manager');
 
 var config = require('../../config');
 var errors = require('../../errors/errors');
@@ -69,7 +69,7 @@ accountAdapter = {
                 break;
 
             default:
-                return callback(new Error(errors.OAUTH_NOT_DEFINED), null);
+                return callback(new Error(errors.OAUTH_INCORRECT), null);
                 break;
         }
 
@@ -127,12 +127,52 @@ accountAdapter = {
                 break;
 
             default:
-                return callback(new Error(errors.OAUTH_NOT_DEFINED), null);
+                return callback(new Error(errors.OAUTH_INCORRECT), null);
                 break;
         }
+
+    },
+
+
+    // *****************************************************************************************************************
+    // Check if the user is already registred.
+    // On success: callback(null)
+    // On failure: callback(error)
+    // *****************************************************************************************************************
+    adapterCheckUser : function (body, callback) {
+
+        switch(body.oauth) {
+            case "own":
+                break;
+
+            case config.vk.name:
+                body.identificator = body.identificator+config.vk.prefix;
+                break;
+
+            case config.google.name:
+                body.identificator = body.identificator+config.google.prefix;
+                break;
+
+            case config.facebook.name:
+                body.identificator = body.identificator+config.facebook.prefix;
+                break;
+
+            default:
+                return callback(new Error(errors.OAUTH_INCORRECT));
+                break;
+        }
+
+        athleteManager.checkIdentificator(body.identificator, function(err) {
+            if(err) {
+                return callback(err);
+            } else {
+                return callback(null);
+            }
+        });
 
     }
 
 };
+
 
 module.exports = accountAdapter;

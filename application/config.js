@@ -24,7 +24,7 @@ const config = {
         secret: '2AK',
         options : { session: false},
         life : {
-            amount : 7,
+            amount : 14,
             unit : 'days'
         }
     },
@@ -34,10 +34,10 @@ const config = {
     },
 
     vk: {
-        name      : 'vk',
-        appId     : '5944334',
-        appSecret : '3LfvjuUCjH1gcp3iUUkI',
-        prefix    : 'vk.com/id'
+        name     : 'vk',
+        prefix   : 'vk.com/id',
+        appId    : '5944334',
+        appSecret:'3LfvjuUCjH1gcp3iUUkI'
     },
 
     google: {

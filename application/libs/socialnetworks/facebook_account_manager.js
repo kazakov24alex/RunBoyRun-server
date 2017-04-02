@@ -4,7 +4,7 @@
 // ===============================================
 
 
-var athleteManager = require('./athlete_manager');
+var athleteManager = require('./../managers/athlete_manager');
 var config = require('../../config');
 var errors = require('../../errors/errors');
 
