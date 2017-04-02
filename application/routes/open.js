@@ -7,8 +7,7 @@
 var express = require('express');
 var router = express.Router();
 
-var accountAdapter = require('./account_adapter');
-var athleteManager = require('./athlete_manager');
+var accountAdapter = require('../libs/managers/auth_manager');
 var countryManager = require('../libs/managers/country_manager');
 
 var logger = require('../libs/logger')(module);
@@ -47,7 +46,7 @@ router.post('/signin', function (req, res) {
 
 // Check identificator
 router.post('/check', function (req, res) {
-    athleteManager.checkIdentificator(req.body.identificator, function(err) {
+    accountAdapter.adapterCheckUser(req.body, function(err) {
        if(err) {
            res.json({success: false, error: err.message}).end();
            logger.warn('Identificator '+req.body.identificator+' checking error: '+err.message);
@@ -85,6 +84,7 @@ router.get('/cities/:countryCode', function (req, res) {
         }
     })
 });
+
 
 // TODO: TEMPORARILY
 // Autharization of new User
