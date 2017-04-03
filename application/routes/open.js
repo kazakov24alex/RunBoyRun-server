@@ -20,7 +20,7 @@ var auth   = require('../libs/auth');
 router.post('/signup', function (req, res) {
     accountAdapter.adapterCreateUser(req.body, "user", function(err, token) {
         if(err) {
-            logger.warn('Registration athlete '+req.body.oauth.toUpperCase()+": "+req.body.identificator+' error: '+err);
+            logger.warn('Registration athlete '+": "+req.body.identificator+' error: '+err);
             res.json({success: false, error: err.message}).end();
         } else {
             logger.info('Athlete '+req.body.identificator+" was successfully registered");
@@ -88,12 +88,9 @@ router.get('/cities/:countryCode', function (req, res) {
 
 // TODO: TEMPORARILY
 // Autharization of new User
-router.get('/admin_test', auth().authenticate(), function (req, res) {
-    if(req.user.role == 'admin') {
-        res.json({success: true, message: 'You are ADMIN. Access allowed.', user: req.user}).end();
-    } else {
-        res.json({success: false, message: 'You are USER. Access denied.', user: req.user}).end();
-    }
+router.get('/check_token', auth().authenticate(), function (req, res) {
+    res.json({success: true}).end();
+    logger.warn("CHECKING TOKEN");
 });
 
 
