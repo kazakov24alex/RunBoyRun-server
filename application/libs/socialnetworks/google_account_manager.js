@@ -53,7 +53,7 @@ googleAccountManager = {
             // check Google ID coincidence
             if (userId == body.identificator) {
                 // ckeck existance of athlete with this Google ID
-                athleteManager.checkIdentificator(config.google.prefix+body.identificator, function (err) {
+                athleteManager.checkIdentificator(body.identificator, function (err) {
                     if(err) {
                         return callback(new Error(errors.GOOGLE_USER_NOT_REGISTRED), null);
                     } else {

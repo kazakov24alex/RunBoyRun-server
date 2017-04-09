@@ -53,7 +53,7 @@ facebookAccountManager = {
             // check Facebook ID coincidence
             if (userId == body.identificator) {
                 // ckeck existance of athlete with this Facebook ID
-                athleteManager.checkIdentificator(config.facebook.prefix+body.identificator, function (err) {
+                athleteManager.checkIdentificator(body.identificator, function (err) {
                     if(err) {
                         return callback(new Error(errors.FACEBOOK_USER_NOT_REGISTRED), null);
                     } else {
