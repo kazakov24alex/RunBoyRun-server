@@ -53,12 +53,12 @@ VKAccountManager = {
             // check VK ID coincidence
             if (userId == body.identificator) {
                 // ckeck existance of athlete with this VK ID
-                athleteManager.checkIdentificator(body.identificator, function (err) {
+                athleteManager.checkIdentificator(config.vk.prefix+body.identificator, function (err) {
                    if(err) {
                        return callback(new Error(errors.VK_USER_NOT_REGISTRED), null);
                    } else {
                        // get token
-                       athleteManager.getToken(body.identificator, function (token) {
+                       athleteManager.getToken(config.vk.prefix+body.identificator, function (token) {
                            return callback(null, token);
                        });
                    }

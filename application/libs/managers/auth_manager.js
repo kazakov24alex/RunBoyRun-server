@@ -97,7 +97,6 @@ accountAdapter = {
                 break;
 
             case config.vk.name:
-                body.identificator = config.vk.prefix + body.identificator;
                 vkAccountManager.loginVkUser(body, function(err, token) {
                     if(err) {
                         return callback(err, null);
@@ -108,7 +107,6 @@ accountAdapter = {
                 break;
 
             case config.google.name:
-                body.identificator = config.google.prefix + body.identificator;
                 googleAccountManager.loginGoogleUser(body, function(err, token) {
                     if(err) {
                         return callback(err, null);
@@ -119,7 +117,6 @@ accountAdapter = {
                 break;
 
             case config.facebook.name:
-                body.identificator = config.facebook.prefix + body.identificator;
                 facebookAccountManager.loginFacebookUser(body, function(err, token) {
                     if(err) {
                         return callback(err, null);
