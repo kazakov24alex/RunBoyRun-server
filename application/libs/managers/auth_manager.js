@@ -97,6 +97,7 @@ accountAdapter = {
                 break;
 
             case config.vk.name:
+
                 vkAccountManager.loginVkUser(body, function(err, token) {
                     if(err) {
                         return callback(err, null);

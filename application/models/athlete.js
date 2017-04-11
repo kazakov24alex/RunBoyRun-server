@@ -12,6 +12,12 @@ var config = require('../config');
 
 // 'Athlete' table model in MySQL DB
 var AthleteModel = sequelize.define('athlete', {
+    Id: {
+        type: Sequelize.INTEGER,
+        autoIncrement: true,
+        allowNull: false,
+        primaryKey: true
+    },
     Name: {
         type: Sequelize.STRING(20),
         allowNull: false
@@ -23,7 +29,7 @@ var AthleteModel = sequelize.define('athlete', {
     Identificator: {
         type: Sequelize.STRING(100),
         allowNull: false,
-        primaryKey: true,
+        //primaryKey: true,
         unique: true
     },
     Hashed_password: {

@@ -41,5 +41,5 @@ app.get('*', function (req, res){
 // Server launch
 var port = process.env.PORT || config.server.defaultPort;
 app.listen(port, function() {
-    console.log("Server started at " + port);
+    logger.info("Server started at " + port);
 });

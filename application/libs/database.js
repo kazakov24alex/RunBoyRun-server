@@ -10,10 +10,12 @@ var logger      = require('./logger')(module);
 var config      = require('../config');
 
 // Models of the Database
-var AthleteModel    = require('./../models/athlete');
 var CityModel       = require('./../models/city');
 var CountryModel    = require('./../models/country');
 var CountryLangModel= require('./../models/country_language') ;
+var AthleteModel    = require('./../models/athlete');
+var ActivityModel   = require('./../models/activity');
+
 
 manager = {
     // *****************************************************************************************************************
@@ -40,18 +42,21 @@ manager = {
         //manager.uploadWorld();
 
         CityModel.sync().then(function () {
-            logger.info('CITIES TABLE SYNCHRONIZED');
+            logger.info('CITIES\t\tTABLE SYNCHRONIZED');
         });
         CountryModel.sync().then(function () {
-            logger.info('COUNTRIES TABLE SYNCHRONIZED');
+            logger.info('COUNTRIES\tTABLE SYNCHRONIZED');
         });
         CountryLangModel.sync().then(function () {
-            logger.info('LANGUAGES TABLE SYNCHRONIZED');
+            logger.info('LANGUAGES\tTABLE SYNCHRONIZED');
         });
 
         AthleteModel.sync().then(function () {
-            logger.info('ATHLETE TABLE SYNCHRONIZED');
+            logger.info('ATHLETE\t\tTABLE SYNCHRONIZED');
         });
+        ActivityModel.sync().then(function () {
+            logger.info('ACTIVITY\t\tTABLE SYNCHRONIZED');
+        })
 
     },
 
