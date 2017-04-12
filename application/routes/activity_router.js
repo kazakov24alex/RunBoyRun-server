@@ -11,7 +11,6 @@ var activityManager = require('../libs/managers/activity_manager');
 
 var logger = require('../libs/logger')(module);
 var config = require('../config');
-var errors = require('../errors/errors');
 var auth   = require('../libs/auth');
 
 
@@ -52,7 +51,7 @@ router.get('/activity/:id', auth().authenticate(), function (req, res) {
                 average_speed:  activity.Average_speed,
                 tempo:          activity.Tempo,
                 description:    activity.Description,
-                timeStep:       activity.Timestep,
+                timestep:       activity.TimeStep,
                 route:          activity.Route.coordinates
             }).end();
             logger.info("athlete '"+req.user.Identificator+"' got activity (ID="+req.params.id+")");
