@@ -123,8 +123,28 @@ athleteManager = {
                 return callback(null);
             }
         });
-    }
+    },
 
+
+
+    // *****************************************************************************************************************
+    // Find athlete_id by Identificator.
+    // On success: callback(null, acitivity_id)
+    // On failure: callback(err, null)
+    // *****************************************************************************************************************
+    findAthleteIdByIdentificator : function(identificator, callback) {
+        AthleteModel.findOne({
+            where: {Identificator: identificator}
+        }).then(function(athlete) {
+            if (!athlete) {
+                return callback(new Error(errors.USER_NOT_FOUND, null));
+            } else {
+                return callback(null, athlete.Id);
+            }
+        }).catch(function(error) {
+            return callback(error, null);
+        });
+    }
 
 };
 
