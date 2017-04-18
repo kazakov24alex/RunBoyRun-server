@@ -144,9 +144,8 @@ athleteManager = {
         }).catch(function(error) {
             return callback(error, null);
         });
-    }
-
     },
+
 
     getProfileInformation : function (identificator, callback) {
         if (!identificator) {
