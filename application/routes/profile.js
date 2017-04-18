@@ -11,7 +11,7 @@ var auth   = require('../libs/auth');
 
 
 router.get('/profile_info', auth().authenticate(), function (req, res) {
-    athleteManager.getProfileInformation("cr7@gmail.com", function (err, athlete) {
+    athleteManager.getProfileInformation(req.user.Identificator, function (err, athlete) {
         if (err){
             logger.warn("Error in indeficator");
             res.json({success: false, error: err.message});
