@@ -148,7 +148,6 @@ athleteManager = {
 
 
     getProfileInformation : function (identificator, callback) {
-        console.log("!!!!!"+identificator);
         if (!identificator) {
             return callback(new Error(errors.IDENTIFICATOR_IS_ABSENT),null);
         }

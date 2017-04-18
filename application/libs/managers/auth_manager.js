@@ -82,7 +82,6 @@ accountAdapter = {
     // On failure: callback(error, null)
     // *****************************************************************************************************************
     adapterLoginUser : function (body, callback) {
-        console.log("!!!"+body.identificator);
         switch(body.oauth) {
             case "own":
                 athleteManager.requestTokenByPassword(body.identificator, body.password, function (err, token) {
