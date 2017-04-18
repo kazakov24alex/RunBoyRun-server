@@ -29,7 +29,10 @@ DBManager.connect();
 
 // Routes
 var openRoutes = require('./routes/open');
+var profileRoutes = require('./routes/profile');
 app.use('/', openRoutes);
+app.use('/api', profileRoutes);
+
 
 
 // Main web-page
