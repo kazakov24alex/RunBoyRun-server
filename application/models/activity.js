@@ -15,7 +15,7 @@ var AthleteModel = require("./athlete");
 // 'Activity' table model in MySQL DB
 var ActivityModel = sequelize.define("activity", {
     Id: {
-        type: Sequelize.BIGINT,
+        type: Sequelize.BIGINT.UNSIGNED,
         primaryKey: true,
         autoIncrement: true,
         allowNull: false
@@ -64,36 +64,33 @@ var ActivityModel = sequelize.define("activity", {
         values: ["good", "medium", "tired", "beated"],
         defaultValue: "good"
     },
-    Map: {
-        type: Sequelize.GEOMETRY("LINESTRING"),
-        allowNull: true
-    },
-    /*MapLat: {
-        type: sequelize.ARRAY(Sequelize.FLOAT(8,6)),
-        allowNull: true
-    },
-    MapLng: {
-        type: sequelize.ARRAY(Sequelize.FLOAT(9,6)),
-        allowNull: true
-    },*/
     Duration: {
         type: Sequelize.TIME,
         allowNull: false
     },
     Distance: {
-        type: Sequelize.FLOAT(6,2),
+        type: Sequelize.FLOAT(6,2).UNSIGNED,
         allowNull: false
     },
     Average_speed: {
-        type: Sequelize.FLOAT(4,2),
+        type: Sequelize.FLOAT(4,2).UNSIGNED,
         allowNull: false
     },
     Tempo: {
-        type: Sequelize.FLOAT(5,2),
+        type: Sequelize.FLOAT(5,2).UNSIGNED,
         allowNull: false
     },
     Description: {
         type: Sequelize.STRING(300),
+        allowNull: true
+    },
+
+    TimeStep: {
+        type: Sequelize.INTEGER(2).UNSIGNED,
+        allowNull: true
+    },
+    Route: {
+        type: Sequelize.GEOMETRY("LINESTRING"),
         allowNull: true
     }
 },{
