@@ -144,8 +144,24 @@ athleteManager = {
         }).catch(function(error) {
             return callback(error, null);
         });
-    }
+    },
 
+
+    getProfileInformation : function (identificator, callback) {
+        if (!identificator) {
+            return callback(new Error(errors.IDENTIFICATOR_IS_ABSENT),null);
+        }
+        AthleteModel.findOne({
+            where: {Identificator: identificator}
+        }).then(function (athlete) {
+            if (!athlete) {
+                return callback(new Error(errors.IDENTIFICATOR_IS_BUSY),null);
+            } else {
+                return callback(null, athlete);
+            }
+        });
+    }
+        // getinfo по принципу файндвоне
 };
 
 module.exports = athleteManager;
