@@ -35,8 +35,8 @@ var ActivityModel = sequelize.define("activity", {
     Sport_type: {
         type: Sequelize.ENUM,
         allowNull: false,
-        values: ["run" , "bicycle", "ski", "walking"],
-        defaultValue: "run"
+        values: ["RUNNING" , "BICYCLE", "WALKING", "SKIRUN"],
+        defaultValue: "RUN"
     },
     DateTime_start: {
         type: Sequelize.DATE,
@@ -49,20 +49,20 @@ var ActivityModel = sequelize.define("activity", {
     Weather: {
         type: Sequelize.ENUM,
         allowNull: false,
-        values: ["sunny" , "clouds", "rain", "snow"],
-        defaultValue: "sunny"
+        values: ["SUNNY" , "CLOUDY", "RAINY", "SNOWY"],
+        defaultValue: "SUNNY"
     },
     Relief: {
         type: Sequelize.ENUM,
         allowNull: false,
-        values: ["stadium", "park", "cross-country", "hills"],
-        defaultValue: "stadium"
+        values: ["STADIUM", "PARK", "CROSS", "HILLS"],
+        defaultValue: "STADIUM"
     },
     Condition: {
         type: Sequelize.ENUM,
         allowNull: false,
-        values: ["good", "medium", "tired", "beated"],
-        defaultValue: "good"
+        values: ["GOOD", "MEDIUM", "TIRED", "BEATED"],
+        defaultValue: "MEDIUM"
     },
     Duration: {
         type: Sequelize.TIME,
