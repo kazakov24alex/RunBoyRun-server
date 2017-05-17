@@ -41,7 +41,7 @@ router.get('/activity/:id', auth().authenticate(), function (req, res) {
                 athlete_id:     activity.Athlete_id,
                 track:          activity.Track,
                 sport_type:     activity.Sport_type,
-                dateTime_start: activity.DateTime_start,
+                datetime_start: activity.DateTime_start,
                 temperature:    activity.Temperature,
                 weather:        activity.Weather,
                 relief:         activity.Relief,
