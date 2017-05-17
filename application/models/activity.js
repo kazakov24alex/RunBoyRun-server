@@ -36,7 +36,7 @@ var ActivityModel = sequelize.define("activity", {
         type: Sequelize.ENUM,
         allowNull: false,
         values: ["RUNNING" , "BICYCLE", "WALKING", "SKIRUN"],
-        defaultValue: "RUN"
+        defaultValue: "RUNNING"
     },
     DateTime_start: {
         type: Sequelize.DATE,
