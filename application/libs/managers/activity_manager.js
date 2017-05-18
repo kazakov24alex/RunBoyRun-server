@@ -46,10 +46,13 @@ activityManager = {
                    TimeStep:        body.timestep,
                    Route:           { type: 'LineString', coordinates: body.route }
                }).then(function(result) {
+                   console.log("PASSED 1");
                    if (!result[1]) {
+                       console.log("PASSED 2");
                        return callback(null, result.dataValues.Id);
                    }
                }).catch(function(error) {
+                   console.log("ERROR 1");
                    return callback(error, null);
                });
            }
