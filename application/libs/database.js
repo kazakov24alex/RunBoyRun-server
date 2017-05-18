@@ -15,6 +15,7 @@ var CountryModel    = require('./../models/country');
 var CountryLangModel= require('./../models/country_language') ;
 var AthleteModel    = require('./../models/athlete');
 var ActivityModel   = require('./../models/activity');
+var CommentModel    = require('./../models/comment');
 
 
 manager = {
@@ -56,9 +57,12 @@ manager = {
         });
         ActivityModel.sync().then(function () {
             logger.info('ACTIVITY\t\tTABLE SYNCHRONIZED');
-        })
+        });
+        CommentModel.sync().then(function () {
+            logger.info('COMMENT\t\tTABLE SYNCHRONIZED');
+        });
 
-    },
+    }
 
 
 
@@ -66,9 +70,9 @@ manager = {
     // Upload Country and City tables to the database.
     // *****************************************************************************************************************
     // TODO: organaze SQL script upload
-    uploadWorld : function () {
+    /*uploadWorld : function () {
 
-       /* var fd = fs.openSync(__dirname + '/../data/world.sql', 'r');
+        var fd = fs.openSync(__dirname + '/../data/world.sql', 'r');
         var decoder = new (require('string_decoder').StringDecoder)();
         var buf = new Buffer(10);
         var list = [], str, bytesReaded;
@@ -90,13 +94,7 @@ manager = {
                 throw err;
             });
         });
-
-
-
-*/
-
-
-    }
+    }*/
 
 };
 

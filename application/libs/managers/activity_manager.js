@@ -4,7 +4,6 @@
 // ========================================
 
 
-var AthleteModel    = require('../../models/athlete');
 var ActivityModel   = require('../../models/activity');
 
 var athleteManager  = require('./athlete_manager');
@@ -29,7 +28,7 @@ activityManager = {
            if(err) {
                return callback(err, null);
            } else {
-               console.log("ROUTE = "+body.toString());
+               console.log("ROUTE = "+body);
                console.log("POINT = "+body.route[0].toString());
 
                ActivityModel.create({
