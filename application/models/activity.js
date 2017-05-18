@@ -35,7 +35,7 @@ var ActivityModel = sequelize.define("activity", {
     Sport_type: {
         type: Sequelize.ENUM,
         allowNull: false,
-        values: ["RUNNING" , "BICYCLE", "WALKING", "SKIRUN"],
+        values: ["RUNNING" , "CYCLING", "WALKING", "SKIRUN"],
         defaultValue: "RUNNING"
     },
     DateTime_start: {
