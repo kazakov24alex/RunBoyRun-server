@@ -29,8 +29,8 @@ activityManager = {
            if(err) {
                return callback(err, null);
            } else {
-               console.log("ROUTE = "+body.route);
-               console.log("POINT = "+body.route[0]);
+               console.log("ROUTE = "+body.toString());
+               console.log("POINT = "+body.route[0].toString());
 
                ActivityModel.create({
                    Athlete_id:      athlete_id,
