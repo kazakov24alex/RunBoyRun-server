@@ -24,10 +24,10 @@ var CommentModel = sequelize.define("comment", {
     Activity_id: {
         type: Sequelize.BIGINT.UNSIGNED,
         allowNull: false,
-        references: {
+        /*references: {
             model: ActivityModel,
             key: "Id"
-        }
+        }*/
     },
     Athlete_id: {
         type: Sequelize.INTEGER,

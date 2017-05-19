@@ -23,10 +23,10 @@ var ActivityModel = sequelize.define("activity", {
     Athlete_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        references: {
+        /*references: {
             model: AthleteModel,
             key: "Id"
-        }
+        }*/
     },
     Track: {    // TRUE - track, FALSE - not track
         type: Sequelize.BOOLEAN,
@@ -82,11 +82,6 @@ var ActivityModel = sequelize.define("activity", {
     },
     Description: {
         type: Sequelize.STRING(300),
-        allowNull: true
-    },
-
-    TimeStep: {
-        type: Sequelize.INTEGER(2).UNSIGNED,
         allowNull: true
     },
     Route: {

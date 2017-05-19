@@ -46,8 +46,8 @@ activityManager = {
                    Average_speed:   body.average_speed,
                    Tempo:           body.tempo,
                    Description:     body.description,
-                   TimeStep:        body.timestep,
-                   Route:           { type: 'LineString', coordinates: body.route }
+                   Route:           { type: 'LineString', coordinates: body.route },
+                   TimeLine:        body.timeline
                }).then(function(result) {
                    console.log("PASSED 1");
                    if (!result[1]) {
