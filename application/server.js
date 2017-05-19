@@ -32,11 +32,13 @@ var openRoutes      = require('./routes/open');
 var profileRoutes   = require('./routes/profile');
 var activityRoutes  = require('./routes/activity_router');
 var commentRoutes   = require('./routes/comment_router');
+var valueRoutes     = require('./routes/value_router');
 
 app.use('/', openRoutes);
 app.use('/api', profileRoutes);
 app.use('/api', activityRoutes);
 app.use('/api', commentRoutes);
+app.use('/api', valueRoutes);
 
 
 // Main web-page

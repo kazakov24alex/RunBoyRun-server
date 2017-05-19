@@ -23,10 +23,6 @@ var ActivityModel = sequelize.define("activity", {
     Athlete_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        /*references: {
-            model: AthleteModel,
-            key: "Id"
-        }*/
     },
     Track: {    // TRUE - track, FALSE - not track
         type: Sequelize.BOOLEAN,
@@ -93,7 +89,9 @@ var ActivityModel = sequelize.define("activity", {
         allowNull: true
     }
 },{
-    tableName: "activity"
+    tableName: "activity",
+    createdAt: false,
+    updatedAt: false
 });
 
 

@@ -16,7 +16,7 @@ var CountryLangModel= require('./../models/country_language') ;
 var AthleteModel    = require('./../models/athlete');
 var ActivityModel   = require('./../models/activity');
 var CommentModel    = require('./../models/comment');
-
+var ValueModel      = require('./../models/value');
 
 manager = {
     // *****************************************************************************************************************
@@ -45,6 +45,8 @@ manager = {
         AthleteModel.hasMany(CommentModel, {foreignKey: 'Athlete_id'});
         CommentModel.belongsTo(AthleteModel, {foreignKey: 'Athlete_id'});
 
+        AthleteModel.hasMany(ValueModel, {foreignKey: 'AthleteValueKey' });
+        ValueModel.belongsTo(AthleteModel, {foreignKey: 'AthleteValueKey' });
 
         CityModel.sync().then(function () {
             logger.info('CITIES\t\tTABLE SYNCHRONIZED');
@@ -65,6 +67,9 @@ manager = {
         CommentModel.sync().then(function () {
             logger.info('COMMENT\t\tTABLE SYNCHRONIZED');
         });
+        ValueModel.sync().then(function () {
+            logger.info('VALUE\t\tTABLE SYNCHRONIZED');
+        })
 
     }
 
