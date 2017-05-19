@@ -52,7 +52,7 @@ router.get('/activity/:id', auth().authenticate(), function (req, res) {
                 tempo:          activity.Tempo,
                 description:    activity.Description,
                 route:          activity.Route.coordinates,
-                time_line:      activity.TimeLine,
+                timeline:      activity.TimeLine,
                 comments:       activity.comments
             }).end();
             logger.info("athlete '"+req.user.Identificator+"' got activity (ID="+req.params.id+")");

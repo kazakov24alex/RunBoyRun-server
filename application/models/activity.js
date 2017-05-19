@@ -87,6 +87,10 @@ var ActivityModel = sequelize.define("activity", {
     Route: {
         type: Sequelize.GEOMETRY("LINESTRING"),
         allowNull: true
+    },
+    TimeLine: {
+        type: Sequelize.GEOMETRY("LINESTRING"),
+        allowNull: true
     }
 },{
     tableName: "activity"
