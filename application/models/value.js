@@ -11,7 +11,7 @@ var config = require("../config");
 
 
 // 'DisLike' table model in MySQL DB
-var DisLikeModel = sequelize.define("value", {
+var ValueModel = sequelize.define("value", {
     Id: {
         type: Sequelize.BIGINT.UNSIGNED,
         primaryKey: true,
@@ -40,4 +40,4 @@ var DisLikeModel = sequelize.define("value", {
 });
 
 
-module.exports = DisLikeModel;
+module.exports = ValueModel;
