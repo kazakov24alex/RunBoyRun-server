@@ -35,7 +35,8 @@ router.get('/activity/:id', auth().authenticate(), function (req, res) {
             res.json({success: false, error: err.message}).end();
             logger.warn("athlete '"+req.user.Identificator+"' getting activity ERROR: "+err.message);
         } else {
-            res.json({
+
+            var activityJSON = {
                 success:        true,
                 id:             activity.Id,
                 athlete_id:     activity.Athlete_id,
@@ -52,9 +53,19 @@ router.get('/activity/:id', auth().authenticate(), function (req, res) {
                 tempo:          activity.Tempo,
                 description:    activity.Description,
                 comments:       activity.comments,
-                route:          activity.Route.coordinates,
-                timeline:      activity.TimeLine
-            }).end();
+            };
+
+            if(track == true) {
+                activityJSON.route = activity.Route.coordinates;
+                activityJSON.timeline = activity.TimeLine.coordinates;
+            } else {
+                activityJSON.route = null;
+                activityJSON.timeline = null;
+            }
+
+            res.json().end(activityJSON);
+
+
             logger.info("athlete '"+req.user.Identificator+"' got activity (ID="+req.params.id+")");
         }
     });
