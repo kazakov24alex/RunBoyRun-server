@@ -81,17 +81,16 @@ activityManager = {
         }).then(function(activity) {
             if (!activity) {
                 return callback(new Error(errors.ACTIVITY_NOT_FOUND, null));
-            } else {
-                commentManager.getComments(id, 3, function (error, comments) {
-                    if(error)
-                        return callback(error, null);
+            }
+            commentManager.getComments(id, null, function (error, comments) {
+                if(error) {
+                    return callback(error, null);
+                } else {
                     activity.comments = comments;
 
                     return callback(null, activity);
-                });
-
-
-            }
+                }
+            });
         }).catch(function(error) {
             return callback(error, null);
         });

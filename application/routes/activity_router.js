@@ -35,7 +35,6 @@ router.get('/activity/:id', auth().authenticate(), function (req, res) {
             res.json({success: false, error: err.message}).end();
             logger.warn("athlete '"+req.user.Identificator+"' getting activity ERROR: "+err.message);
         } else {
-
             var activityJSON = {
                 success:        true,
                 id:             activity.Id,
@@ -63,7 +62,7 @@ router.get('/activity/:id', auth().authenticate(), function (req, res) {
                 activityJSON.timeline = null;
             }
 
-            res.json().end(activityJSON);
+            res.json(activityJSON).end();
 
 
             logger.info("athlete '"+req.user.Identificator+"' got activity (ID="+req.params.id+")");
