@@ -96,6 +96,44 @@ valueManager = {
         }).catch(function(error) {
             return callback(error, null);
         });
+    },
+
+    getPreviewValue : function (activity_id, identificator, callback) {
+
+        console.log("POINT 1");
+        athleteManager.findAthleteIdByIdentificator(identificator, function(err, athlete_id) {
+            if (err) {
+                return callback(err, null);
+            } else {
+                ValueModel.findAll({
+                    where: {
+                        Activity_id: activity_id,
+                        Athlete_id: athlete_id
+                    }
+                }).then(function (values) {
+                    var values_stat = {
+                        like_num: 0,
+                        dislike_num: 0,
+                        my_value: null
+                    };
+
+                    for(var i=0; i<values.length; i++) {
+                        if(values[i].dataValues.Value == true)
+                            values_stat.like_num++;
+                        if(values[i].dataValues.Value == false)
+                            values_stat.dislike_num++;
+                        if(values[i].dataValues.Athlete_id == athlete_id)
+                            values_stat.my_value =  values[i].dataValues.Value;
+                    }
+
+                    return callback(null, values_stat);
+
+                }).catch(function (error) {
+                    return callback(error, null);
+                });
+            }
+        });
+
     }
 
 
