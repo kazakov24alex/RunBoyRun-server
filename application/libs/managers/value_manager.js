@@ -5,6 +5,7 @@
 
 
 var ValueModel   = require('../../models/value');
+var AthleteModel = require('../../models/value');
 /*
 var athleteManager  = require('./athlete_manager');
 var commentManager  = require('./comment_manager');*/
@@ -99,8 +100,6 @@ valueManager = {
     },
 
     getPreviewValue : function (activity_id, identificator, callback) {
-
-        console.log("POINT 1");
         athleteManager.findAthleteIdByIdentificator(identificator, function(err, athlete_id) {
             if (err) {
                 return callback(err, null);
@@ -134,6 +133,27 @@ valueManager = {
             }
         });
 
+    },
+
+    getAuthorLikeValues : function (activity_id, callback) {
+        ValueModel.findAll({
+            where: {
+                Activity_id: activity_id,
+                Value: true
+            },
+            attributes: ['Athlete_id', 'Value'],
+            include: [{
+                model: AthleteModel,
+                attributes: ['Id', 'Name', 'Surname'],
+                required: true
+            }]
+        }).then(function (values) {
+
+            return callback(null, values);
+
+        }).catch(function (error) {
+            return callback(error, null);
+        });
     }
 
 

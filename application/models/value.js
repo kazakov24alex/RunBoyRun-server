@@ -9,6 +9,8 @@ var Sequelize = require("sequelize");
 var sequelize = require("./../libs/sequelize");
 var config = require("../config");
 
+var AthleteModel = require("./athlete");
+
 
 // 'DisLike' table model in MySQL DB
 var ValueModel = sequelize.define("value", {
@@ -36,7 +38,9 @@ var ValueModel = sequelize.define("value", {
     }
 
 },{
-    tableName: "value"
+    tableName: "value",
+    createdAt: false,
+    updatedAt: false
 });
 
 

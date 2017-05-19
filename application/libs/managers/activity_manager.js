@@ -43,7 +43,7 @@ activityManager = {
                    Distance:        body.distance,
                    Average_speed:   body.average_speed,
                    Tempo:           body.tempo,
-                   Description:     body.description
+                   Description:     body.description,
                };
 
                if(body.timeline == null || body.route == null) {

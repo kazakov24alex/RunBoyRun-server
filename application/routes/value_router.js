@@ -27,4 +27,17 @@ router.post('/value', auth().authenticate(), function (req, res) {
     });
 });
 
+//
+router.get('/value/:activity_id', auth().authenticate(), function (req, res) {
+    valueManager.getAuthorLikeValues(req.params.activity_id, function(err, like_values) {
+        if(err) {
+            res.json({success: false, error: err.message}).end();
+            logger.warn("athlete '"+req.user.Identificator+"' getting values list ERROR: "+err.message);
+        } else {
+            res.json({success: true, values: like_values}).end();
+            logger.info("athlete '"+req.user.Identificator+"' got values of activity (ID="+req.params.activity_id+")");
+        }
+    });
+});
+
 module.exports = router;
