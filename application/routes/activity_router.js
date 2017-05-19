@@ -51,9 +51,9 @@ router.get('/activity/:id', auth().authenticate(), function (req, res) {
                 average_speed:  activity.Average_speed,
                 tempo:          activity.Tempo,
                 description:    activity.Description,
+                comments:       activity.comments,
                 route:          activity.Route.coordinates,
-                timeline:      activity.TimeLine,
-                comments:       activity.comments
+                timeline:      activity.TimeLine
             }).end();
             logger.info("athlete '"+req.user.Identificator+"' got activity (ID="+req.params.id+")");
         }

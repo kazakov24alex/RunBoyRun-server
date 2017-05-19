@@ -21,7 +21,7 @@ activityManager = {
     // On failure: callback(err, null)
     // *****************************************************************************************************************
     addActivity: function (identificator, body, callback) {
-        if(body.track == true && (body.timestep == null || body.route == null )) {
+        if(body.track == true && (body.timeline == null || body.route == null )) {
             return callback(new Error(errors.ACTIVITY_INCORRECT), null);
         }
 
@@ -47,7 +47,7 @@ activityManager = {
                    Tempo:           body.tempo,
                    Description:     body.description,
                    Route:           { type: 'LineString', coordinates: body.route },
-                   TimeLine:        body.timeline
+                   TimeLine:        { type: 'LineString', coordinates: body.timeline }
                }).then(function(result) {
                    console.log("PASSED 1");
                    if (!result[1]) {
@@ -55,7 +55,7 @@ activityManager = {
                        return callback(null, result.dataValues.Id);
                    }
                }).catch(function(error) {
-                   console.log("ERROR 1");
+                   console.log("ERROR 1" + error.message);
                    return callback(error, null);
                });
            }

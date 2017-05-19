@@ -62,7 +62,7 @@ commentManager = {
             }]
         }).then(function(comments) {
             if (!comments || comments == "") {
-                return callback(new Error(errors.COMMENTS_ABSENT, null));
+                return callback(null, null);
             } else {
 
                 if(commentsNum) {
