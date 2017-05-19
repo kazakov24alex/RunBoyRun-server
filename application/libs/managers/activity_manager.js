@@ -29,7 +29,8 @@ activityManager = {
            if(err) {
                return callback(err, null);
            } else {
-               ActivityModel.create({
+
+               var activity = {
                    Athlete_id:      athlete_id,
                    Track:           body.track,
                    Sport_type:      body.sport_type,
@@ -43,9 +44,17 @@ activityManager = {
                    Average_speed:   body.average_speed,
                    Tempo:           body.tempo,
                    Description:     body.description,
-                   Route:           { type: 'LineString', coordinates: body.route },
-                   TimeLine:        { type: 'LineString', coordinates: body.timeline }
-               }).then(function(result) {
+               };
+
+               if(body.timeline == null || body.route == null) {
+                   activity.Route = null;
+                   activity.TimeLine = null;
+               } else {
+                   activity.Route = { type: 'LineString', coordinates: body.route },
+                   activity.TimeLine = { type: 'LineString', coordinates: body.timeline }
+               }
+
+               ActivityModel.create(activity).then(function(result) {
                    console.log("PASSED 1");
                    if (!result[1]) {
                        console.log("PASSED 2");
