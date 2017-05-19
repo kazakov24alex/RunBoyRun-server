@@ -55,7 +55,7 @@ router.get('/activity/:id', auth().authenticate(), function (req, res) {
                 comments:       activity.comments,
             };
 
-            if(track == true) {
+            if(activity.Track == true) {
                 activityJSON.route = activity.Route.coordinates;
                 activityJSON.timeline = activity.TimeLine.coordinates;
             } else {
