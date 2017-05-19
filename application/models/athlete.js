@@ -9,6 +9,8 @@ var Sequelize = require('sequelize');
 var sequelize = require('./../libs/sequelize');
 var config = require('../config');
 
+var CommentModel = require('./comment');
+
 
 // 'Athlete' table model in MySQL DB
 var AthleteModel = sequelize.define('athlete', {

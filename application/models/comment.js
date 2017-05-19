@@ -31,11 +31,7 @@ var CommentModel = sequelize.define("comment", {
     },
     Athlete_id: {
         type: Sequelize.INTEGER,
-        allowNull: false,
-        references: {
-            model: AthleteModel,
-            key: "Id"
-        }
+        allowNull: false
     },
     Text: {
         type: Sequelize.STRING(140),

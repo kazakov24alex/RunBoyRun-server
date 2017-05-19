@@ -42,6 +42,10 @@ manager = {
     syncTables : function () {
         //manager.uploadWorld();
 
+        AthleteModel.hasMany(CommentModel, {foreignKey: 'Athlete_id'});
+        CommentModel.belongsTo(AthleteModel, {foreignKey: 'Athlete_id'});
+
+
         CityModel.sync().then(function () {
             logger.info('CITIES\t\tTABLE SYNCHRONIZED');
         });

@@ -7,6 +7,7 @@
 var ActivityModel   = require('../../models/activity');
 
 var athleteManager  = require('./athlete_manager');
+var commentManager  = require('./comment_manager');
 
 var config = require('../../config');
 var errors = require('../../errors/errors');
@@ -75,7 +76,15 @@ activityManager = {
             if (!activity) {
                 return callback(new Error(errors.ACTIVITY_NOT_FOUND, null));
             } else {
-                return callback(null, activity);
+                commentManager.getComments(id, 3, function (error, comments) {
+                    if(error)
+                        return callback(error, null);
+                    activity.comments = comments;
+
+                    return callback(null, activity);
+                });
+
+
             }
         }).catch(function(error) {
             return callback(error, null);

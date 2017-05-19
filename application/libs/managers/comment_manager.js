@@ -3,6 +3,7 @@
 // Module for managing comments
 // ========================================
 
+var AthleteModel   = require('../../models/athlete');
 var CommentModel    = require('../../models/comment');
 
 var athleteManager  = require('./athlete_manager');
@@ -17,7 +18,7 @@ commentManager = {
     // On success: callback(null, comment_id)
     // On failure: callback(err, null)
     // *****************************************************************************************************************
-    addComment: function (identificator, body, callback) {
+    addComment : function (identificator, body, callback) {
         if(!body.text) {
             return callback(new Error(errors.COMMENT_TEXT_ABSENT), null);
         }
@@ -41,7 +42,42 @@ commentManager = {
                 return callback(err, null);
             });
         })
+    },
 
+
+    // *****************************************************************************************************************
+    // Get all comments of activity.
+    // On success: callback(null, comments)
+    // On failure: callback(err, null)
+    // *****************************************************************************************************************
+    getComments : function(activity_id, commentsNum, callback) {
+        CommentModel.findAll({
+            where: {Activity_id: activity_id},
+            order:  [['DateTime', 'DESC']],
+            attributes: ['DateTime', 'Text'],
+            include: [{
+                model: AthleteModel,
+                attributes: ['Id', 'Name', 'Surname'],
+                required: true
+            }]
+        }).then(function(comments) {
+            if (!comments || comments == "") {
+                return callback(new Error(errors.COMMENTS_ABSENT, null));
+            } else {
+
+                if(commentsNum) {
+                    var newComments = [];
+                    for (i = 0; i < commentsNum; i++) {
+                        newComments[i] = comments[i];
+                    }
+                    return callback(null, newComments);
+                } else {
+                    return callback(null, comments);
+                }
+            }
+        }).catch(function(error) {
+            return callback(error, null);
+        });
 
     }
 
