@@ -21,7 +21,7 @@ router.post('/value', auth().authenticate(), function (req, res) {
             res.json({success: false, error: err.message}).end();
             logger.warn("athlete '"+req.user.Identificator+"' changing value ERROR: "+err.message);
         } else {
-            res.json({success: true, value_id: value_id}).end();
+            res.json({success: true}).end();
             logger.info("athlete '"+req.user.Identificator+"' change value of activity (ID="+req.body.activity_id+")");
         }
     });
