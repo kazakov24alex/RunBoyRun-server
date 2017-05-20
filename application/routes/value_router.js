@@ -22,7 +22,7 @@ router.post('/value', auth().authenticate(), function (req, res) {
             logger.warn("athlete '"+req.user.Identificator+"' changing value ERROR: "+err.message);
         } else {
             res.json({success: true, value_id: value_id}).end();
-            logger.info("athlete '"+req.user.Identificator+"' change value of activity (ID="+body.activity_id+")");
+            logger.info("athlete '"+req.user.Identificator+"' change value of activity (ID="+req.body.activity_id+")");
         }
     });
 });
