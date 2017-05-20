@@ -5,7 +5,7 @@
 
 
 var ValueModel   = require('../../models/value');
-var AthleteModel = require('../../models/value');
+var AthleteModel = require('../../models/athlete');
 /*
 var athleteManager  = require('./athlete_manager');
 var commentManager  = require('./comment_manager');*/
@@ -141,7 +141,7 @@ valueManager = {
                 Activity_id: activity_id,
                 Value: true
             },
-            attributes: ['Athlete_id', 'Value'],
+            attributes: ['Value'],
             include: [{
                 model: AthleteModel,
                 attributes: ['Id', 'Name', 'Surname'],
