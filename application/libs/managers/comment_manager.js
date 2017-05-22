@@ -67,6 +67,9 @@ commentManager = {
 
                 if(commentsNum) {
                     var newComments = [];
+                    if(commentsNum > comments.length) {
+                        commentsNum = comments.length;
+                    }
                     for (i = 0; i < commentsNum; i++) {
                         newComments[i] = {
                             text:       comments[i].dataValues.Text,
