@@ -6,9 +6,6 @@
 
 var ValueModel   = require('../../models/value');
 var AthleteModel = require('../../models/athlete');
-/*
-var athleteManager  = require('./athlete_manager');
-var commentManager  = require('./comment_manager');*/
 
 var config = require('../../config');
 var errors = require('../../errors/errors');
@@ -148,8 +145,18 @@ valueManager = {
                 required: true
             }]
         }).then(function (values) {
+            var valuesArr = [];
 
-            return callback(null, values);
+            for(var i = 0; i < values.length; i++) {
+                valuesArr[i] = {
+                    value:      values[i].dataValues.Value,
+                    athlete_id: values[i].dataValues.athlete.Id,
+                    name:       values[i].dataValues.athlete.Name,
+                    surname:    values[i].dataValues.athlete.Surname
+                };
+            }
+
+            return callback(null, valuesArr);
 
         }).catch(function (error) {
             return callback(error, null);

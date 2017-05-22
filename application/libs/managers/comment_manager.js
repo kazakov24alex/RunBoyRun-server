@@ -68,7 +68,7 @@ commentManager = {
                 if(commentsNum) {
                     var newComments = [];
                     if(commentsNum > comments.length) {
-                        commentsNum = comments.length;
+                        commentsNum =    comments.length;
                     }
                     for (i = 0; i < commentsNum; i++) {
                         newComments[i] = {
@@ -76,7 +76,7 @@ commentManager = {
                             date_time:  comments[i].dataValues.DateTime,
                             athlete_id: comments[i].dataValues.athlete.Id,
                             name:       comments[i].dataValues.athlete.Name,
-                            surname:     comments[i].dataValues.athlete.Surname
+                            surname:    comments[i].dataValues.athlete.Surname
                         };
                     }
                     return callback(null, newComments);
