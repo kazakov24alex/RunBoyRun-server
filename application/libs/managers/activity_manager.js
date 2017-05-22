@@ -82,15 +82,7 @@ activityManager = {
             if (!activity) {
                 return callback(new Error(errors.ACTIVITY_NOT_FOUND, null));
             }
-            commentManager.getComments(id, null, function (error, comments) {
-                if(error) {
-                    return callback(error, null);
-                } else {
-                    activity.comments = comments;
-
-                    return callback(null, activity);
-                }
-            });
+            return callback(null, activity);
         }).catch(function(error) {
             return callback(error, null);
         });

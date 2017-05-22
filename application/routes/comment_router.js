@@ -41,4 +41,18 @@ router.get('/comment/:activity_id', auth().authenticate(), function (req, res) {
    });
 });
 
+
+// Getting several comments of activity
+router.get('/comment/:activity_id/:num', auth().authenticate(), function (req, res) {
+   commentManager.getComments(req.params.activity_id, req.params.num, function (err, comments) {
+       if(err) {
+           res.json({success: false, error: err.message}).end();
+           logger.warn("athlete '"+req.user.Identificator+"' getting preview comments ERROR: "+err.message);
+       } else {
+           res.json({success: true, comments: comments}).end();
+           logger.info("athlete '"+req.user.Identificator+"' got preview comments of activity (ID="+req.params.activity_id+")");
+       }
+   });
+});
+
 module.exports = router;

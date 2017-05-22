@@ -68,16 +68,20 @@ commentManager = {
                 if(commentsNum) {
                     var newComments = [];
                     for (i = 0; i < commentsNum; i++) {
-                        newComments[i] = comments[i];
+                        newComments[i] = {
+                            text:       comments[i].dataValues.Text,
+                            date_time:  comments[i].dataValues.DateTime,
+                            athlete_id: comments[i].dataValues.athlete.Id,
+                            name:       comments[i].dataValues.athlete.Name,
+                            surname:     comments[i].dataValues.athlete.Surname
+                        };
                     }
                     return callback(null, newComments);
                 } else {
                     return callback(null, comments);
                 }
             }
-        }).catch(function(error) {
-            return callback(error, null);
-        });
+        })
 
     }
 

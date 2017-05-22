@@ -53,8 +53,7 @@ router.get('/activity/:id', auth().authenticate(), function (req, res) {
             distance:       activity.Distance,
             average_speed:  activity.Average_speed,
             tempo:          activity.Tempo,
-            description:    activity.Description,
-            comments:       activity.comments
+            description:    activity.Description
         };
 
         if(activity.Track == true) {
