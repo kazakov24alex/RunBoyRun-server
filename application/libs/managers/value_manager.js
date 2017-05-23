@@ -103,8 +103,7 @@ valueManager = {
             } else {
                 ValueModel.findAll({
                     where: {
-                        Activity_id: activity_id,
-                        Athlete_id: athlete_id
+                        Activity_id: activity_id
                     }
                 }).then(function (values) {
                     var values_stat = {
@@ -112,6 +111,7 @@ valueManager = {
                         dislike_num: 0,
                         my_value: null
                     };
+
 
                     for(var i=0; i<values.length; i++) {
                         if(values[i].dataValues.Value == true)
