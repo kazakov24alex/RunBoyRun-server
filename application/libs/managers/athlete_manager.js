@@ -147,7 +147,7 @@ athleteManager = {
     },
 
 
-    getProfileInformation : function (identificator, callback) {
+    getProfileByIdentificator : function (identificator, callback) {
         if (!identificator) {
             return callback(new Error(errors.IDENTIFICATOR_IS_ABSENT),null);
         }
@@ -160,8 +160,23 @@ athleteManager = {
                 return callback(null, athlete);
             }
         });
+    },
+
+
+    getProfileByID : function (athlete_id, callback) {
+        if (!athlete_id) {
+            return callback(new Error(errors.IDENTIFICATOR_IS_ABSENT),null);
+        }
+        AthleteModel.findOne({
+            where: { Id: athlete_id }
+        }).then(function (athlete) {
+            if (!athlete) {
+                return callback(new Error(errors.IDENTIFICATOR_IS_BUSY),null);
+            } else {
+                return callback(null, athlete);
+            }
+        });
     }
-        // getinfo по принципу файндвоне
 };
 
 module.exports = athleteManager;

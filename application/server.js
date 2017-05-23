@@ -29,7 +29,7 @@ DBManager.connect();
 
 // Routes
 var openRoutes      = require('./routes/open');
-var profileRoutes   = require('./routes/profile');
+var profileRoutes   = require('./routes/profile_router');
 var activityRoutes  = require('./routes/activity_router');
 var commentRoutes   = require('./routes/comment_router');
 var valueRoutes     = require('./routes/value_router');
