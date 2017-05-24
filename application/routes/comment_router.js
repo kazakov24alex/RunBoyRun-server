@@ -55,4 +55,19 @@ router.get('/comment/:activity_id/:num', auth().authenticate(), function (req, r
    });
 });
 
+
+// Getting several comments of activity
+router.get('/comment/:activity_id/:commentsNum/:pageNum', auth().authenticate(), function (req, res) {
+    commentManager.getCommentsPage(req.params.activity_id, req.params.commentsNum, req.params.pageNum ,function (err, comments) {
+        if(err) {
+            res.json({success: false, error: err.message}).end();
+            logger.warn("athlete '"+req.user.Identificator+"' getting comments page ERROR: "+err.message);
+        } else {
+            res.json({success: true, comments: comments}).end();
+            logger.info("athlete '"+req.user.Identificator+"' got comments pag of activity (ID="+req.params.activity_id+")");
+        }
+    });
+});
+
+
 module.exports = router;
