@@ -135,8 +135,7 @@ valueManager = {
     getAuthorLikeValues : function (activity_id, callback) {
         ValueModel.findAll({
             where: {
-                Activity_id: activity_id,
-                Value: true
+                Activity_id: activity_id
             },
             attributes: ['Value'],
             include: [{
