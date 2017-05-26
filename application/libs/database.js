@@ -48,6 +48,9 @@ manager = {
         AthleteModel.hasMany(ValueModel, {foreignKey: 'Athlete_id' });
         ValueModel.belongsTo(AthleteModel, {foreignKey: 'Athlete_id' });
 
+        AthleteModel.hasMany(ActivityModel, {foreignKey: 'Athlete_id' });
+        ActivityModel.belongsTo(AthleteModel, {foreignKey: 'Athlete_id' });
+
         CityModel.sync().then(function () {
             logger.info('CITIES\t\tTABLE SYNCHRONIZED');
         });

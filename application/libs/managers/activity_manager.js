@@ -5,6 +5,7 @@
 
 
 var ActivityModel   = require('../../models/activity');
+var AthleteModel    = require('../../models/athlete');
 
 var athleteManager  = require('./athlete_manager');
 var commentManager  = require('./comment_manager');
@@ -43,7 +44,7 @@ activityManager = {
                    Distance:        body.distance,
                    Average_speed:   body.average_speed,
                    Tempo:           body.tempo,
-                   Description:     body.description,
+                   Description:     body.description
                };
 
                if(body.timeline == null || body.route == null) {
@@ -87,6 +88,59 @@ activityManager = {
             return callback(error, null);
         });
 
+    },
+
+    getActivityPage: function (athlete_id, activitiesNum, pageNum, callback) {
+
+        ActivityModel.findAll({
+            where: {Athlete_id : athlete_id},
+            order:  [['DateTime_start', 'DESC']],
+            attributes: ['Id', 'Sport_type', 'DateTime_start', 'Duration', 'Distance', 'Description'],
+            include: [{
+                model: AthleteModel,
+                attributes: ['Id', 'Name', 'Surname'],
+                required: true
+            }]
+        }).then(function(activity) {
+            if (!activity || activity == "") {
+                return callback(null, null);
+            } else {
+
+                if(!activitiesNum)
+                    return callback(new Error(errors.ACTIVITIES_NUM_ABSENT), null);
+                if(!pageNum)
+                    return callback(new Error(errors.ACTIVITIES_PAGENUM_ABSENT), null);
+
+                var pageEnd = pageNum*activitiesNum;
+                if(pageEnd > activity.length) {
+                    pageEnd = activity.length;
+                }
+
+                var newInd = 0;
+                var newActivities = [];
+                for (i = (pageNum-1)*activitiesNum; i < pageEnd; i++, newInd++) {
+                    newActivities[newInd] = {
+                        id:                 activity[i].dataValues.Id,
+                        sport_type:         activity[i].dataValues.Sport_type,
+                        datetime_start:     activity[i].dataValues.DateTime_start,
+                        duration:           activity[i].dataValues.Duration,
+                        distance:           activity[i].dataValues.Distance,
+                        description:        activity[i].dataValues.Description,
+                        athlete_id:         activity[i].dataValues.athlete.Id,
+                        name:               activity[i].dataValues.athlete.Name,
+                        surname:            activity[i].dataValues.athlete.Surname,
+                        order:              activity.length - i
+                    };
+
+                    valueManager.getPreviewValue(req.params.id, req.user.Identificator, function(error, values) {
+                        activities.like_num = values.like_num;
+                        activities.dislike_num = values.dislike_num;
+                        activities.my_value = values.my_value;
+                        return callback(null, newActivities);
+                    });
+                }
+            }
+        })
     }
 
 

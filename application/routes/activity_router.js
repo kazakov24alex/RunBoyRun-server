@@ -81,4 +81,16 @@ router.get('/activity/:id', auth().authenticate(), function (req, res) {
     });
 });
 
+router.get('/activity/:athlete_id/:activitiesNum/:pagesNum', auth().authenticate(), function (req, res) {
+    activityManager.getActivityPage(req.params.athlete_id, req.params.activitiesNum, req.params.pagesNum, function (err, activities) {
+        if (err) {
+            res.json({success: false, error: err.message}).end();
+            logger.warn("athlete '" + req.params.athlete_id + "' getting activities page ERROR: " + err.message);
+            return;
+        } else {
+
+        }
+    });
+});
+
 module.exports = router;
