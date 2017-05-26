@@ -8,7 +8,6 @@ var ActivityModel   = require('../../models/activity');
 var AthleteModel    = require('../../models/athlete');
 
 var athleteManager  = require('./athlete_manager');
-var commentManager  = require('./comment_manager');
 
 var config = require('../../config');
 var errors = require('../../errors/errors');
@@ -51,8 +50,8 @@ activityManager = {
                    activity.Route = null;
                    activity.TimeLine = null;
                } else {
-                   activity.Route = { type: 'LineString', coordinates: body.route },
-                   activity.TimeLine = { type: 'LineString', coordinates: body.timeline }
+                   activity.Route = { type: 'LineString', coordinates: body.route };
+                   activity.TimeLine = { type: 'LineString', coordinates: body.timeline };
                }
 
                ActivityModel.create(activity).then(function(result) {
@@ -90,7 +89,7 @@ activityManager = {
 
     },
 
-    getActivityPage: function (athlete_id, activitiesNum, pageNum, callback) {
+    getActivitiesPage: function (athlete_id, activitiesNum, pageNum, callback) {
 
         ActivityModel.findAll({
             where: {Athlete_id : athlete_id},
@@ -105,7 +104,6 @@ activityManager = {
             if (!activity || activity == "") {
                 return callback(null, null);
             } else {
-
                 if(!activitiesNum)
                     return callback(new Error(errors.ACTIVITIES_NUM_ABSENT), null);
                 if(!pageNum)

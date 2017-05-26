@@ -165,35 +165,26 @@ valueManager = {
 
 
 
-    addPreviewValues : function (activities, identificator, callback) {
-        athleteManager.findAthleteIdByIdentificator(identificator, function(err, athlete_id) {
-            if (err) {
-                return callback(err, null);
-            } else {
-                var NUM = activities.length;
+    addPreviewValuesToActivitiesArr : function (activities, identificator, callback) {
+        var NUM = activities.length;
+        for (var i = 0; i < activities.length; i++) {
 
-                for (var i = 0; i < activities.length; i++) {
-
-                    valueManager.getPreviewValueNew(activities[i].id, identificator, i, function (err, values_stat) {
-                        if (err) {
-                            return callback(new Error("F*CK" + err.message), null);
-                        }
-
-                        activities[values_stat.index].like_num = values_stat.like_num;
-                        activities[values_stat.index].dislike_num = values_stat.dislike_num;
-                        activities[values_stat.index].my_value = values_stat.my_value;
-
-                        NUM--;
-                        if (NUM == 0) {
-                            return callback(null, activities);
-                        }
-                    });
-
+            valueManager.getPreviewValueNew(activities[i].id, identificator, i, function (err, values_stat) {
+                if (err) {
+                    return callback(err, null);
                 }
 
-            }
+                activities[values_stat.index].like_num = values_stat.like_num;
+                activities[values_stat.index].dislike_num = values_stat.dislike_num;
+                activities[values_stat.index].my_value = values_stat.my_value;
 
-        });
+                NUM--;
+                if (NUM == 0) {
+                    return callback(null, activities);
+                }
+            });
+
+        }
     },
 
 
@@ -232,7 +223,7 @@ valueManager = {
             }
         });
 
-    },
+    }
 
 
 

@@ -82,22 +82,30 @@ router.get('/activity/:id', auth().authenticate(), function (req, res) {
 });
 
 router.get('/activity/:athlete_id/:activitiesNum/:pagesNum', auth().authenticate(), function (req, res) {
-    activityManager.getActivityPage(req.params.athlete_id, req.params.activitiesNum, req.params.pagesNum, function (err, activities) {
+    var athlete_id = req.params.athlete_id;
+    if(athlete_id == 0) {
+        athlete_id = req.user.Id;
+    }
+
+    activityManager.getActivitiesPage(athlete_id, req.params.activitiesNum, req.params.pagesNum, function (err, activities) {
         if (err) {
             res.json({success: false, error: err.message}).end();
             logger.warn("athlete '" + req.params.athlete_id + "' getting activities page ERROR: " + err.message);
         } else {
-            valueManager.addPreviewValues(activities, req.user.Identificator, function (err, activitiesWithValues) {
-                if (err) {
-                    res.json({success: false, error: err.message}).end();
-                    logger.warn("athlete '" + req.params.athlete_id + "' getting activities page ERROR: " + err.message);
-                } else {
-                    res.json({success: true, news: activitiesWithValues}).end();
-                    logger.info("athlete '"+req.user.Identificator+"' got activities page");
-                }
-            });
-
-
+            if(activities) {
+                valueManager.addPreviewValuesToActivitiesArr(activities, req.user.Identificator, function (err, activitiesWithValues) {
+                    if (err) {
+                        res.json({success: false, error: err.message}).end();
+                        logger.warn("athlete '" + req.params.athlete_id + "' getting activities page ERROR: " + err.message);
+                    } else {
+                        res.json({success: true, news: activitiesWithValues}).end();
+                        logger.info("athlete '" + req.user.Identificator + "' got activities page");
+                    }
+                });
+            } else {
+                res.json({success: true, news: activities}).end();
+                logger.info("athlete '" + req.user.Identificator + "' got activities page");
+            }
         }
     });
 });
