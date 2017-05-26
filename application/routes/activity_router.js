@@ -92,7 +92,7 @@ router.get('/activity/:athlete_id/:activitiesNum/:pagesNum', auth().authenticate
                     res.json({success: false, error: err.message}).end();
                     logger.warn("athlete '" + req.params.athlete_id + "' getting activities page ERROR: " + err.message);
                 } else {
-                    res.json(activitiesWithValues).end();
+                    res.json({success: true, news: activitiesWithValues}).end();
                     logger.info("athlete '"+req.user.Identificator+"' got activities page");
                 }
             });
