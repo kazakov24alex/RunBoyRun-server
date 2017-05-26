@@ -86,8 +86,17 @@ router.get('/activity/:athlete_id/:activitiesNum/:pagesNum', auth().authenticate
         if (err) {
             res.json({success: false, error: err.message}).end();
             logger.warn("athlete '" + req.params.athlete_id + "' getting activities page ERROR: " + err.message);
-            return;
         } else {
+            valueManager.addPreviewValues(activities, req.user.Identificator, function (err, activitiesWithValues) {
+                if (err) {
+                    res.json({success: false, error: err.message}).end();
+                    logger.warn("athlete '" + req.params.athlete_id + "' getting activities page ERROR: " + err.message);
+                } else {
+                    res.json(activitiesWithValues).end();
+                    logger.info("athlete '"+req.user.Identificator+"' got activities page");
+                }
+            });
+
 
         }
     });

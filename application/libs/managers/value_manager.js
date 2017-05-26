@@ -112,7 +112,7 @@ valueManager = {
                         my_value: null
                     };
 
-
+                    console.log("VALUES_LENGTH = "+values.length);
                     for(var i=0; i<values.length; i++) {
                         if(values[i].dataValues.Value == true)
                             values_stat.like_num++;
@@ -144,6 +144,7 @@ valueManager = {
                 required: true
             }]
         }).then(function (values) {
+
             var valuesArr = [];
 
             for(var i = 0; i < values.length; i++) {
@@ -160,7 +161,78 @@ valueManager = {
         }).catch(function (error) {
             return callback(error, null);
         });
-    }
+    },
+
+
+
+    addPreviewValues : function (activities, identificator, callback) {
+        athleteManager.findAthleteIdByIdentificator(identificator, function(err, athlete_id) {
+            if (err) {
+                return callback(err, null);
+            } else {
+                var NUM = activities.length;
+
+                for (var i = 0; i < activities.length; i++) {
+
+                    valueManager.getPreviewValueNew(activities[i].id, identificator, i, function (err, values_stat) {
+                        if (err) {
+                            return callback(new Error("F*CK" + err.message), null);
+                        }
+
+                        activities[values_stat.index].like_num = values_stat.like_num;
+                        activities[values_stat.index].dislike_num = values_stat.dislike_num;
+                        activities[values_stat.index].my_value = values_stat.my_value;
+
+                        NUM--;
+                        if (NUM == 0) {
+                            return callback(null, activities);
+                        }
+                    });
+
+                }
+
+            }
+
+        });
+    },
+
+
+
+    getPreviewValueNew : function (activity_id, identificator, idx, callback) {
+        athleteManager.findAthleteIdByIdentificator(identificator, function(err, athlete_id) {
+            if (err) {
+                return callback(err, null);
+            } else {
+                ValueModel.findAll({
+                    where: {
+                        Activity_id: activity_id
+                    }
+                }).then(function (values) {
+                    var values_stat = {
+                        like_num: 0,
+                        dislike_num: 0,
+                        my_value: null,
+                        index: idx
+                    };
+
+                    for(var i=0; i<values.length; i++) {
+                        if(values[i].dataValues.Value == true)
+                            values_stat.like_num++;
+                        if(values[i].dataValues.Value == false)
+                            values_stat.dislike_num++;
+                        if(values[i].dataValues.Athlete_id == athlete_id)
+                            values_stat.my_value =  values[i].dataValues.Value;
+                    }
+
+                    return callback(null, values_stat);
+
+                }).catch(function (error) {
+                    return callback(error, null);
+                });
+            }
+        });
+
+    },
 
 
 

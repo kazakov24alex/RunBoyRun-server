@@ -132,13 +132,9 @@ activityManager = {
                         order:              activity.length - i
                     };
 
-                    valueManager.getPreviewValue(req.params.id, req.user.Identificator, function(error, values) {
-                        activities.like_num = values.like_num;
-                        activities.dislike_num = values.dislike_num;
-                        activities.my_value = values.my_value;
-                        return callback(null, newActivities);
-                    });
                 }
+
+                return callback(null, newActivities);
             }
         })
     }
