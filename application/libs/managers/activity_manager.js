@@ -114,7 +114,7 @@ activityManager = {
                 console.log("SUB="+(pageEnd-activity.length)+"  activNum="+activitiesNum);
 
                 if( (pageEnd-activity.length) >= activitiesNum) {
-                    return callback(new Error(errors.ACTIVITITES_INCORRECT_PAGE_NUMBER), null)
+                    return callback(null, null)
                 }
 
                 if(pageEnd > activity.length) {
