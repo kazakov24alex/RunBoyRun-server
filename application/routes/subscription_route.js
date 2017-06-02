@@ -29,6 +29,7 @@ router.post('/subs', auth().authenticate(), function (req, res) {
 });
 
 
+
 // Get all subscribers of athlete
 router.get('/subs/:athlete_id', auth().authenticate(), function (req, res) {
     subscriptionManager.getSubscribers(req.params.athlete_id, function (err, subscribers) {
