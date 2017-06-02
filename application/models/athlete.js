@@ -9,8 +9,6 @@ var Sequelize = require('sequelize');
 var sequelize = require('./../libs/sequelize');
 var config = require('../config');
 
-var CommentModel = require('./comment');
-
 
 // 'Athlete' table model in MySQL DB
 var AthleteModel = sequelize.define('athlete', {
@@ -31,7 +29,6 @@ var AthleteModel = sequelize.define('athlete', {
     Identificator: {
         type: Sequelize.STRING(100),
         allowNull: false,
-        //primaryKey: true,
         unique: true
     },
     Hashed_password: {

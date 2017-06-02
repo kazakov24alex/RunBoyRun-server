@@ -17,6 +17,8 @@ var AthleteModel    = require('./../models/athlete');
 var ActivityModel   = require('./../models/activity');
 var CommentModel    = require('./../models/comment');
 var ValueModel      = require('./../models/value');
+var SubscriptionModel=require('./../models/subscription');
+
 
 manager = {
     // *****************************************************************************************************************
@@ -51,6 +53,12 @@ manager = {
         AthleteModel.hasMany(ActivityModel, {foreignKey: 'Athlete_id' });
         ActivityModel.belongsTo(AthleteModel, {foreignKey: 'Athlete_id' });
 
+        AthleteModel.hasMany(SubscriptionModel, {foreignKey: 'Athlete_id' });
+        SubscriptionModel.belongsTo(AthleteModel, {foreignKey: 'Athlete_id' });
+        AthleteModel.hasMany(SubscriptionModel, {foreignKey: 'Subscriber_id' });
+        SubscriptionModel.belongsTo(AthleteModel, {foreignKey: 'Subscriber_id' });
+
+
         CityModel.sync().then(function () {
             logger.info('CITIES\t\tTABLE SYNCHRONIZED');
         });
@@ -72,7 +80,11 @@ manager = {
         });
         ValueModel.sync().then(function () {
             logger.info('VALUE\t\tTABLE SYNCHRONIZED');
-        })
+        });
+        SubscriptionModel.sync().then(function () {
+           logger.info('SUBSCRIPTION\tTABLE SYNCHRONIZED');
+        });
+
 
     }
 
