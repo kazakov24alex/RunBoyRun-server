@@ -18,8 +18,8 @@ router.get('/profile', auth().authenticate(), function (req, res) {
             res.json({success: false, error: err.message});
         }
         else{
-            logger.warn("Athlete '"+req.user.Identificator+"' got profile info (ID="+req.params.athlete_id+")");
-            res.json({success: true, name: athlete.Name, surname: athlete.Surname, birthday: athlete.Birthday,
+            logger.warn("Athlete '"+req.user.Identificator+"' got profile info (ID="+req.user.Id+")");
+            res.json({success: true, id: athlete.Id, name: athlete.Name, surname: athlete.Surname, birthday: athlete.Birthday,
                 sex: athlete.Sex, country: athlete.Country, city: athlete.City, subscription: null}).end();
         }
     });
@@ -39,7 +39,7 @@ router.get('/profile/:athlete_id', auth().authenticate(), function (req, res) {
                     res.json({success: false, error: err.message});
                 } else {
                     logger.warn("Athlete '"+req.user.Identificator+"' got profile info (ID="+req.params.athlete_id+")");
-                    res.json({success: true, name: athlete.Name, surname: athlete.Surname, birthday: athlete.Birthday,
+                    res.json({success: true, id: athlete.Id, name: athlete.Name, surname: athlete.Surname, birthday: athlete.Birthday,
                         sex: athlete.Sex, country: athlete.Country, city: athlete.City, subscription: subscription}).end();
                 }
             });
