@@ -55,13 +55,10 @@ activityManager = {
                }
 
                ActivityModel.create(activity).then(function(result) {
-                   console.log("PASSED 1");
                    if (!result[1]) {
-                       console.log("PASSED 2");
                        return callback(null, result.dataValues.Id);
                    }
                }).catch(function(error) {
-                   console.log("ERROR 1" + error.message);
                    return callback(error, null);
                });
            }

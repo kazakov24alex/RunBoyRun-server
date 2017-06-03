@@ -74,7 +74,8 @@ subscriptionManager = {
 
 
     getSubscribers: function (athlete_id, callback) {
-        console.log("LALALLA");
+        if(!athlete_id)     { return callback(new Error(errors.SUBSCRIBE_ATHLETE_ID_ABSENT)); }
+
         SubscriptionModel.findAll({
             where: {
                 Athlete_id: athlete_id
@@ -100,6 +101,32 @@ subscriptionManager = {
         }).catch(function (error) {
             return callback(error, null);
         });
+    },
+
+    // *****************************************************************************************************************
+    // Check subscription.
+    // On success: callback(null, true/false)
+    // On failure: callback(err, null)
+    // *****************************************************************************************************************
+    checkSubscription: function (subscriber_id, athlete_id, callback) {
+        if(!subscriber_id)  { return callback(new Error(errors.SUBSCRIBE_SUBSCRIBER_ID_ABSENT)); }
+        if(!athlete_id)     { return callback(new Error(errors.SUBSCRIBE_ATHLETE_ID_ABSENT)); }
+
+        SubscriptionModel.findOne({
+            where: {
+                Athlete_id:     athlete_id,
+                Subscriber_id:  subscriber_id
+            }
+        }).then(function (subscription) {
+            if (!subscription) {
+                return callback(null, false);
+            } else {
+                return callback(null, true);
+            }
+        }).catch(function(error) {
+            return callback(error);
+        });
+
     }
 
 };
