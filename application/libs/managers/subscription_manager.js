@@ -90,7 +90,7 @@ subscriptionManager = {
             var subscribersArr = [];
             for (var i = 0; i < subscribers.length; i++) {
                 subscribersArr[i] = {
-                    subscriber_id:  subscribers[i].dataValues.Subscriber_id,
+                    id:  subscribers[i].dataValues.Subscriber_id,
                     name:           subscribers[i].dataValues.athlete.Name,
                     surname:        subscribers[i].dataValues.athlete.Surname
                 };
