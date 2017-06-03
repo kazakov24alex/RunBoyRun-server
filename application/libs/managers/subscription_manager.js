@@ -6,8 +6,6 @@
 var AthleteModel        = require('../../models/athlete');
 var SubscriptionModel   = require('../../models/subscription');
 
-var athleteManager  = require('./athlete_manager');
-
 var errors = require('../../errors/errors');
 
 
@@ -76,18 +74,28 @@ subscriptionManager = {
 
 
     getSubscribers: function (athlete_id, callback) {
+        console.log("LALALLA");
         SubscriptionModel.findAll({
             where: {
                 Athlete_id: athlete_id
             },
-            attributes: ['Athlete_id', 'Subscriber_id'],
+            attributes: ['Subscriber_id'],
             include: [{
                 model: AthleteModel,
-                attributes: ['Id', 'Name', 'Surname'],
+                attributes: ['Name', 'Surname'],
                 required: true
             }]
-        }).then(function (subscribtions) {
-            return callback(null, subscribtions);
+        }).then(function (subscribers) {
+            var subscribersArr = [];
+            for (var i = 0; i < subscribers.length; i++) {
+                subscribersArr[i] = {
+                    subscriber_id:  subscribers[i].dataValues.Subscriber_id,
+                    name:           subscribers[i].dataValues.athlete.Name,
+                    surname:        subscribers[i].dataValues.athlete.Surname
+                };
+            }
+
+            return callback(null, subscribersArr);
 
         }).catch(function (error) {
             return callback(error, null);
