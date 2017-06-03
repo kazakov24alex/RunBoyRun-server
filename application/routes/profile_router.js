@@ -20,7 +20,7 @@ router.get('/profile', auth().authenticate(), function (req, res) {
         else{
             logger.warn("Athlete '"+req.user.Identificator+"' got profile info (ID="+req.params.athlete_id+")");
             res.json({success: true, name: athlete.Name, surname: athlete.Surname, birthday: athlete.Birthday,
-                sex: athlete.Sex, country: athlete.Country, city: athlete.City}).end();
+                sex: athlete.Sex, country: athlete.Country, city: athlete.City, subscription: null}).end();
         }
     });
 });
