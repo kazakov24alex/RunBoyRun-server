@@ -112,6 +112,10 @@ subscriptionManager = {
         if(!subscriber_id)  { return callback(new Error(errors.SUBSCRIBE_SUBSCRIBER_ID_ABSENT)); }
         if(!athlete_id)     { return callback(new Error(errors.SUBSCRIBE_ATHLETE_ID_ABSENT)); }
 
+        if(subscriber_id == athlete_id) {
+            return callback (null, null);
+        }
+
         SubscriptionModel.findOne({
             where: {
                 Athlete_id:     athlete_id,
@@ -124,7 +128,7 @@ subscriptionManager = {
                 return callback(null, true);
             }
         }).catch(function(error) {
-            return callback(error);
+            return callback(error, null);
         });
 
     }
