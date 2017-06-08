@@ -28,19 +28,19 @@ DBManager.connect();
 
 
 // Routes
-var openRoutes          = require('./routes/open');
-var profileRoutes       = require('./routes/profile_router');
-var activityRoutes      = require('./routes/activity_router');
-var commentRoutes       = require('./routes/comment_router');
-var valueRoutes         = require('./routes/value_router');
-var subscriptionRoutes  = require('./routes/subscription_route');
+var openRouter          = require('./routers/open_router');
+var profileRouter       = require('./routers/profile_router');
+var activityRouter      = require('./routers/activity_router');
+var commentRouter       = require('./routers/comment_router');
+var valueRouter         = require('./routers/value_router');
+var subscriptionRouter  = require('./routers/subscription_route');
 
-app.use('/', openRoutes);
-app.use('/api', profileRoutes);
-app.use('/api', activityRoutes);
-app.use('/api', commentRoutes);
-app.use('/api', valueRoutes);
-app.use('/api', subscriptionRoutes);
+app.use('/', openRouter);
+app.use('/api', profileRouter);
+app.use('/api', activityRouter);
+app.use('/api', commentRouter);
+app.use('/api', valueRouter);
+app.use('/api', subscriptionRouter);
 
 
 // Main web-page

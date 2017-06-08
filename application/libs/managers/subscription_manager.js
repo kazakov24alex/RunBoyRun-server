@@ -12,7 +12,7 @@ var errors = require('../../errors/errors');
 subscriptionManager = {
 
     // *****************************************************************************************************************
-    // Add new subscriptionRoutes to database.
+    // Add new subscription to database.
     // On success: callback(null)
     // On failure: callback(err)
     // *****************************************************************************************************************

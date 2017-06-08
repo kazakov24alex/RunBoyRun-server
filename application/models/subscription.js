@@ -1,6 +1,6 @@
 
 // ========================================
-// DB Model for subscriptionRoutes
+// DB Model for subscriptionRouter
 // ========================================
 
 

@@ -15,7 +15,7 @@ var config = require('../config');
 var auth   = require('../libs/auth');
 
 
-// Addition of new subscriptionRoutes
+// Addition of new subscriptionRouter
 router.post('/subs', auth().authenticate(), function (req, res) {
     subscriptionManager.handleSubscribe(req.user.Id, req.body.athlete_id, function (err) {
         if(err) {

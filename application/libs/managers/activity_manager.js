@@ -90,7 +90,7 @@ activityManager = {
 
         ActivityModel.findAll({
             where: {Athlete_id : athlete_id},
-            order:  [['DateTime_start', 'DESC']],
+            order:  [['id', 'DESC']],
             attributes: ['Id', 'Sport_type', 'DateTime_start', 'Duration', 'Distance', 'Description'],
             include: [{
                 model: AthleteModel,
