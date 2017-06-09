@@ -56,13 +56,13 @@ router.get('/activity/:id', auth().authenticate(), function (req, res) {
             description:    activity.Description
         };
 
-        if(activity.Track == true) {
+        /*if(activity.Track == true) {
             activityJSON.route = activity.Route.coordinates;
             activityJSON.timeline = activity.TimeLine.coordinates;
         } else {
             activityJSON.route = null;
             activityJSON.timeline = null;
-        }
+        }*/
 
         valueManager.getPreviewValue(req.params.id, req.user.Identificator, function(error, values) {
             activityJSON.like_num = values.like_num;
@@ -109,5 +109,22 @@ router.get('/activity/:athlete_id/:activitiesNum/:pagesNum', auth().authenticate
         }
     });
 });
+
+
+// Getting route of activity by activity_id
+router.get('/activity/route/:id', auth().authenticate(), function (req, res) {
+    activityManager.getRoute(req.params.id, function (err, route) {
+        if (err) {
+            res.json({success: false, error: err.message}).end();
+            logger.warn("athlete '" + req.user.Identificator + "' getting route of activity ERROR: " + err.message);
+        } else {
+            res.json({success: true, route: route}).end();
+            logger.info("athlete '" + req.user.Identificator + "' got route of activity (ID="+req.params.id);
+        }
+    });
+});
+
+
+
 
 module.exports = router;

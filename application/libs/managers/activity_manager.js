@@ -140,6 +140,34 @@ activityManager = {
                 return callback(null, newActivities);
             }
         })
+    },
+
+
+    getRoute: function (id, callback) {
+        ActivityModel.findOne({
+            where: {Id: id},
+            attributes: ['Route', 'TimeLine'],
+        }).then(function(activity) {
+            if (!activity) {
+                return callback(new Error(errors.ACTIVITY_NOT_FOUND, null));
+            }
+
+            var route = [];
+
+            for(var i = 0; i < activity.Route.coordinates.length; i++) {
+                var point = [];
+                point[0] = activity.Route.coordinates[i][0];
+                point[1] = activity.Route.coordinates[i][1];
+                point[2] = activity.TimeLine.coordinates[i][0];
+
+                route[i] = point;
+            }
+
+            return callback(null, route);
+        }).catch(function(error) {
+            return callback(error, null);
+        });
+
     }
 
 
