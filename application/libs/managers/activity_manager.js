@@ -152,6 +152,10 @@ activityManager = {
                 return callback(new Error(errors.ACTIVITY_NOT_FOUND, null));
             }
 
+            if(!activity.Route || !activity.TimeLine) {
+                return callback(null, null);
+            }
+
             var route = [];
 
             for(var i = 0; i < activity.Route.coordinates.length; i++) {
