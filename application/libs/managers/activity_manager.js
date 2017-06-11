@@ -50,24 +50,8 @@ activityManager = {
                    activity.Route = null;
                    activity.TimeLine = null;
                } else {
-                   /*var newRoute = [];
-                   for(var i = 0; i < body.route.length; i++) {
-                       newRoute[i][0] = body.route[i*2];
-                       newRoute[i][1] = body.route[i*2+1];
-                   }
-                   activity.Route = { type: 'LineString', coordinates: newRoute };
-
-                   var newTimeline = [];
-                   for(var i = 0; i < body.route.length; i++) {
-                       newTimeline[i][0] = body.timeline[i*2];
-                       newTimeline[i][1] = body.timeline[i*2+1];
-                   }
-                   activity.TimeLine = { type: 'LineString', coordinates: newTimeline };*/
-
                    activity.Route = { type: 'LineString', coordinates: body.route };
-                   activity.TimeLine = null;
-                   //activity.TimeLine = { type: 'LineString', coordinates: activity.timeline };
-
+                   activity.TimeLine = { type: 'LineString', coordinates: body.timeline };
                }
 
                ActivityModel.create(activity).then(function(result) {
