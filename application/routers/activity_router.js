@@ -17,8 +17,6 @@ var auth   = require('../libs/auth');
 
 // Addition of new athlete's activity
 router.post('/activity', auth().authenticate(), function (req, res) {
-    console.log("JSON = "+JSON.stringify(req.body.route));
-
     activityManager.addActivity(req.user.Identificator, req.body, function (err, activity_id) {
         if(err) {
             res.json({success: false, error: err.message}).end();
