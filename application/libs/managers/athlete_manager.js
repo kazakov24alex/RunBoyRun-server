@@ -11,6 +11,7 @@ var bcrypt  = require('bcrypt');
 var AthleteModel = require('../../models/athlete');
 var config = require('../../config');
 var errors = require('../../errors/errors');
+var Sequelize = require('sequelize');
 
 
 athleteManager = {
@@ -176,7 +177,53 @@ athleteManager = {
                 return callback(null, athlete);
             }
         });
+    },
+
+
+    searchAthletes : function (searchString, finder_id, callback) {
+        if (!searchString) {
+            return Error(errors.SEARCH_STRING_IS_ABSENT, null)
+        }
+
+        var splitResult = searchString.split("+");
+        var stringsArray = [];
+        for (i = 0; i < splitResult.length; i++) {
+            if(!splitResult[i] == "") {
+                stringsArray.push(splitResult[i]);
+            }
+        }
+
+
+        AthleteModel.findAll({
+            where: Sequelize.literal('athlete.Id <> '+finder_id),
+            attributes: ['Id', 'Name', 'Surname']
+        }).then(function (athletes) {
+            if (!athletes) {
+                return callback(new Error(errors.USER_NOT_FOUND, null));
+            } else {
+
+                var rightAthletes = [];
+                for(i = 0; i < athletes.length; i++) {
+                    for(j = 0; j < stringsArray.length; j++) {
+                        if(athletes[i].Name.toLowerCase().indexOf(stringsArray[j].toLowerCase()) !== -1) {
+                            rightAthletes.push(athletes[i]);
+                            break;
+                        } else if (athletes[i].Surname.toLowerCase().indexOf(stringsArray[j].toLowerCase()) !== -1) {
+                            rightAthletes.push(athletes[i]);
+                            break;
+                        }
+                    }
+                }
+
+                return callback(null, rightAthletes);
+            }
+        }).catch(function (error) {
+            return callback(error, null);
+        });
+
     }
+
+
 };
 
 module.exports = athleteManager;

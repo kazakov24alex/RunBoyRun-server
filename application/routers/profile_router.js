@@ -48,8 +48,18 @@ router.get('/profile/:athlete_id', auth().authenticate(), function (req, res) {
 });
 
 
+router.get('/profile/search/:search_string', auth().authenticate(), function (req, res) {
+    athleteManager.searchAthletes(req.params.search_string, req.user.Id, function (error, athletes) {
+        if(error) {
+            logger.warn("Searching athletes error: "+error.message);
+            res.json({success: false, error: error.message});
+        } else {
+            logger.warn("Athlete '"+req.user.Identificator+"' got athletes list");
+            res.json({success: true, athletes: athletes});
+        }
+    });
+});
+
+
 
 module.exports = router;
-//router.get
-//по принципу последнего
-//получить иденти и кинуть в функцию по получению инфы

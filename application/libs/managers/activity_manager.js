@@ -50,8 +50,8 @@ activityManager = {
                    activity.Route = null;
                    activity.TimeLine = null;
                } else {
-                   console.log("JSON = "+JSON.stringify(body.route));
-                   console.log("JSON = "+JSON.stringify(body.timeline));
+           /*        console.log("JSON = "+JSON.stringify(body.route));
+                   console.log("JSON = "+JSON.stringify(body.timeline));*/
                    activity.Route = { type: 'LineString', coordinates: body.route };
                    activity.TimeLine = { type: 'LineString', coordinates: body.timeline };
                }

@@ -112,7 +112,6 @@ valueManager = {
                         my_value: null
                     };
 
-                    console.log("VALUES_LENGTH = "+values.length);
                     for(var i=0; i<values.length; i++) {
                         if(values[i].dataValues.Value == true)
                             values_stat.like_num++;
