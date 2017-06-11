@@ -9,6 +9,7 @@ var router = express.Router();
 
 var activityManager = require('../libs/managers/activity_manager');
 var valueManager    = require('../libs/managers/value_manager');
+var subscriptionManager = require('../libs/managers/subscription_manager');
 
 var logger = require('../libs/logger')(module);
 var config = require('../config');
@@ -120,6 +121,26 @@ router.get('/activity/route/:id', auth().authenticate(), function (req, res) {
         } else {
             res.json({success: true, route: route}).end();
             logger.info("athlete '" + req.user.Identificator + "' got route of activity (ID="+req.params.id);
+        }
+    });
+});
+
+
+router.get('/newsfeed/start_id/:start_id/page_size/:page_size/page_num/:page_num', auth().authenticate(), function (req, res) {
+    subscriptionManager.getSubscriptionsID(req.user.Id, function (err, subscriptionsArr) {
+        if (err) {
+            res.json({success: false, error: err.message}).end();
+            logger.warn("athlete '" + req.user.Identificator + "' getting newsfeed ERROR: " + err.message);
+        } else {
+            activityManager.getNewsPage(req.params.start_id, subscriptionsArr, req.params.page_size, req.params.page_num, function (err, news) {
+                if (err) {
+                    res.json({success: false, error: err.message}).end();
+                    logger.warn("athlete '" + req.user.Identificator + "' getting newsfeed ERROR: " + err.message);
+                } else {
+                    res.json({success: true, route: news}).end();
+                    logger.info("athlete '" + req.user.Identificator + "' get news page");
+                }
+            });
         }
     });
 });

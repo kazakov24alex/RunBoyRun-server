@@ -131,7 +131,32 @@ subscriptionManager = {
             return callback(error, null);
         });
 
+    },
+
+
+    getSubscriptionsID: function (athlete_id, callback) {
+        if(!athlete_id)     { return callback(new Error(errors.SUBSCRIBE_ATHLETE_ID_ABSENT)); }
+
+        SubscriptionModel.findAll({
+            where: {
+                Subscriber_id: athlete_id
+            },
+            attributes: ['Athlete_id']
+
+        }).then(function (subscriptions) {
+
+            var subscriptionsArr = [];
+            for(var i = 0; i < subscriptions.length; i++) {
+                subscriptionsArr.push(subscriptions[i].dataValues.Athlete_id)
+            }
+
+            return callback(null, subscriptionsArr);
+
+        }).catch(function (error) {
+            return callback(error, null);
+        });
     }
+
 
 };
 

@@ -3,6 +3,7 @@
 // Module for managing athlete accounts
 // ========================================
 
+var Sequelize = require('sequelize');
 
 var ActivityModel   = require('../../models/activity');
 var AthleteModel    = require('../../models/athlete');
@@ -174,6 +175,63 @@ activityManager = {
             return callback(error, null);
         });
 
+    },
+
+
+    getNewsPage: function (start_id, subscriptionsArr, pageSize, pageNum, callback) {
+
+        ActivityModel.findAll({
+            where: {
+                Athlete_id : subscriptionsArr,
+                Id : Sequelize.literal('activity.Id < '+start_id) },
+            order:  [['id', 'DESC']],
+            attributes: ['Id', 'Sport_type', 'DateTime_start', 'Duration', 'Distance', 'Description'],
+            include: [{
+                model: AthleteModel,
+                attributes: ['Id', 'Name', 'Surname'],
+                required: true
+            }]
+        }).then(function(activity) {
+            if (!activity || activity == "") {
+                return callback(null, null);
+            } else {
+                if(!pageSize)
+                    return callback(new Error(errors.ACTIVITIES_NUM_ABSENT), null);
+                if(!pageNum)
+                    return callback(new Error(errors.ACTIVITIES_PAGENUM_ABSENT), null);
+
+                var pageEnd = pageNum*pageSize;
+
+                if( (pageEnd-activity.length) >= pageSize) {
+                    return callback(null, null)
+                }
+
+                if(pageEnd > activity.length) {
+                    pageEnd = activity.length;
+                }
+
+
+                var newInd = 0;
+                var newActivities = [];
+                for (i = (pageNum-1)*pageSize; i < pageEnd; i++, newInd++) {
+                    newActivities[newInd] = {
+                        id:                 activity[i].dataValues.Id,
+                        sport_type:         activity[i].dataValues.Sport_type,
+                        datetime_start:     activity[i].dataValues.DateTime_start,
+                        duration:           activity[i].dataValues.Duration,
+                        distance:           activity[i].dataValues.Distance,
+                        description:        activity[i].dataValues.Description,
+                        athlete_id:         activity[i].dataValues.athlete.Id,
+                        name:               activity[i].dataValues.athlete.Name,
+                        surname:            activity[i].dataValues.athlete.Surname,
+                        order:              activity.length - i
+                    };
+
+                }
+
+                return callback(null, newActivities);
+            }
+        })
     }
 
 
