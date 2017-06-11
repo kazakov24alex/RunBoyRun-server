@@ -198,33 +198,30 @@ athleteManager = {
             where: Sequelize.literal('athlete.Id <> '+finder_id),
             attributes: ['Id', 'Name', 'Surname']
         }).then(function (athletes) {
-            if (!athletes) {
-                return callback(new Error(errors.USER_NOT_FOUND, null));
-            } else {
 
-                var rightAthletes = [];
-                for(i = 0; i < athletes.length; i++) {
-                    for(j = 0; j < stringsArray.length; j++) {
-                        if(athletes[i].Name.toLowerCase().indexOf(stringsArray[j].toLowerCase()) !== -1) {
-                            rightAthletes.push({
-                                id: athletes[i].Id,
-                                name: athletes[i].Name,
-                                surname: athletes[i].Surname
-                            });
-                            break;
-                        } else if (athletes[i].Surname.toLowerCase().indexOf(stringsArray[j].toLowerCase()) !== -1) {
-                            rightAthletes.push({
-                                id: athletes[i].Id,
-                                name: athletes[i].Name,
-                                surname: athletes[i].Surname
-                            });
-                            break;
-                        }
+            var rightAthletes = [];
+            for(i = 0; i < athletes.length; i++) {
+                for(j = 0; j < stringsArray.length; j++) {
+                    if(athletes[i].Name.toLowerCase().indexOf(stringsArray[j].toLowerCase()) !== -1) {
+                        rightAthletes.push({
+                            id: athletes[i].Id,
+                            name: athletes[i].Name,
+                            surname: athletes[i].Surname
+                        });
+                        break;
+                    } else if (athletes[i].Surname.toLowerCase().indexOf(stringsArray[j].toLowerCase()) !== -1) {
+                        rightAthletes.push({
+                            id: athletes[i].Id,
+                            name: athletes[i].Name,
+                            surname: athletes[i].Surname
+                        });
+                        break;
                     }
                 }
-
-                return callback(null, rightAthletes);
             }
+
+            return callback(null, rightAthletes);
+
         }).catch(function (error) {
             return callback(error, null);
         });
