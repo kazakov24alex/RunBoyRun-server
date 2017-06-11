@@ -206,10 +206,18 @@ athleteManager = {
                 for(i = 0; i < athletes.length; i++) {
                     for(j = 0; j < stringsArray.length; j++) {
                         if(athletes[i].Name.toLowerCase().indexOf(stringsArray[j].toLowerCase()) !== -1) {
-                            rightAthletes.push(athletes[i]);
+                            rightAthletes.push({
+                                id: athletes[i].Id,
+                                name: athletes[i].Name,
+                                surname: athletes[i].Surname
+                            });
                             break;
                         } else if (athletes[i].Surname.toLowerCase().indexOf(stringsArray[j].toLowerCase()) !== -1) {
-                            rightAthletes.push(athletes[i]);
+                            rightAthletes.push({
+                                id: athletes[i].Id,
+                                name: athletes[i].Name,
+                                surname: athletes[i].Surname
+                            });
                             break;
                         }
                     }
