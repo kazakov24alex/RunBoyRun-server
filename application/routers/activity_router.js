@@ -132,15 +132,27 @@ router.get('/newsfeed/start_id/:start_id/page_size/:page_size/page_num/:page_num
             res.json({success: false, error: err.message}).end();
             logger.warn("athlete '" + req.user.Identificator + "' getting newsfeed ERROR: " + err.message);
         } else {
-            activityManager.getNewsPage(req.params.start_id, subscriptionsArr, req.params.page_size, req.params.page_num, function (err, news) {
-                if (err) {
-                    res.json({success: false, error: err.message}).end();
-                    logger.warn("athlete '" + req.user.Identificator + "' getting newsfeed ERROR: " + err.message);
-                } else {
-                    res.json({success: true, route: news}).end();
-                    logger.info("athlete '" + req.user.Identificator + "' get news page");
-                }
-            });
+            if(req.params.start_id == 0) {
+                activityManager.getFirstNewsPage(subscriptionsArr, req.params.page_size, req.params.page_num, function (err, news) {
+                    if (err) {
+                        res.json({success: false, error: err.message}).end();
+                        logger.warn("athlete '" + req.user.Identificator + "' getting newsfeed ERROR: " + err.message);
+                    } else {
+                        res.json({success: true, route: news}).end();
+                        logger.info("athlete '" + req.user.Identificator + "' get news page");
+                    }
+                });
+            } else {
+                activityManager.getNewsPage(req.params.start_id, subscriptionsArr, req.params.page_size, req.params.page_num, function (err, news) {
+                    if (err) {
+                        res.json({success: false, error: err.message}).end();
+                        logger.warn("athlete '" + req.user.Identificator + "' getting newsfeed ERROR: " + err.message);
+                    } else {
+                        res.json({success: true, route: news}).end();
+                        logger.info("athlete '" + req.user.Identificator + "' get news page");
+                    }
+                });
+            }
         }
     });
 });
