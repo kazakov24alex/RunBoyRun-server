@@ -138,7 +138,7 @@ router.get('/newsfeed/start_id/:start_id/page_size/:page_size/page_num/:page_num
                         res.json({success: false, error: err.message}).end();
                         logger.warn("athlete '" + req.user.Identificator + "' getting newsfeed ERROR: " + err.message);
                     } else {
-                        res.json({success: true, route: news}).end();
+                        res.json({success: true, news: news}).end();
                         logger.info("athlete '" + req.user.Identificator + "' get news page");
                     }
                 });
@@ -148,7 +148,7 @@ router.get('/newsfeed/start_id/:start_id/page_size/:page_size/page_num/:page_num
                         res.json({success: false, error: err.message}).end();
                         logger.warn("athlete '" + req.user.Identificator + "' getting newsfeed ERROR: " + err.message);
                     } else {
-                        res.json({success: true, route: news}).end();
+                        res.json({success: true, news: news}).end();
                         logger.info("athlete '" + req.user.Identificator + "' get news page");
                     }
                 });
