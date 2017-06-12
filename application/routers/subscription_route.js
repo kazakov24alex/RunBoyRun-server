@@ -58,7 +58,7 @@ router.get('/subscriptions/:athlete_id', auth().authenticate(), function (req, r
             res.json({success: false, error: err.message}).end();
             logger.warn("athlete '"+req.user.Identificator+"' getting subscriptions ERROR: "+err.message);
         } else {
-            res.json({success: true, subscriptions: subscriptions}).end();
+            res.json({success: true, subscribers: subscriptions}).end();
             logger.info("athlete '"+req.user.Identificator+"' got subscriptions (ID="+req.params.athlete_id+")");
         }
     });
