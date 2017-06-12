@@ -32,12 +32,33 @@ router.post('/subs', auth().authenticate(), function (req, res) {
 
 // Get all subscribers of athlete
 router.get('/subs/:athlete_id', auth().authenticate(), function (req, res) {
-    subscriptionManager.getSubscribers(req.params.athlete_id, function (err, subscribers) {
+    var athlete_id = req.params.athlete_id;
+    if(athlete_id == 0) {
+        athlete_id = req.user.Id;
+    }
+    subscriptionManager.getSubscribers(athlete_id, function (err, subscribers) {
         if(err) {
             res.json({success: false, error: err.message}).end();
             logger.warn("athlete '"+req.user.Identificator+"' getting subscriptions ERROR: "+err.message);
         } else {
             res.json({success: true, subscribers: subscribers}).end();
+            logger.info("athlete '"+req.user.Identificator+"' got subscriptions (ID="+req.params.athlete_id+")");
+        }
+    });
+});
+
+
+router.get('/subscriptions/:athlete_id', auth().authenticate(), function (req, res) {
+    var athlete_id = req.params.athlete_id;
+    if(athlete_id == 0) {
+        athlete_id = req.user.Id;
+    }
+    subscriptionManager.getSubscriptions(athlete_id, function (err, subscriptions) {
+        if(err) {
+            res.json({success: false, error: err.message}).end();
+            logger.warn("athlete '"+req.user.Identificator+"' getting subscriptions ERROR: "+err.message);
+        } else {
+            res.json({success: true, subscriptions: subscriptions}).end();
             logger.info("athlete '"+req.user.Identificator+"' got subscriptions (ID="+req.params.athlete_id+")");
         }
     });

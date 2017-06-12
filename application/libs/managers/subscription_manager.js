@@ -133,6 +133,26 @@ subscriptionManager = {
 
     },
 
+    getSubscriptions:  function (athlete_id, callback) {
+        subscriptionManager.getSubscriptionsID(athlete_id, function (error, idArr) {
+            AthleteModel.findAll({
+                where: {
+                    Id: idArr
+                },
+                attributes: ['Id', 'Name', 'Surname']
+
+            }).then(function (athletes) {
+
+                return callback(null, athletes);
+
+            }).catch(function (error) {
+                return callback(error, null);
+            });
+        });
+
+
+    },
+
 
     getSubscriptionsID: function (athlete_id, callback) {
         if(!athlete_id)     { return callback(new Error(errors.SUBSCRIBE_ATHLETE_ID_ABSENT)); }
