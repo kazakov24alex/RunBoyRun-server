@@ -16,7 +16,6 @@ var auth   = require('../libs/auth');
 
 // Addition of new athlete's comment
 router.post('/value', auth().authenticate(), function (req, res) {
-    console.log("INPUT = "+req.body.value);
     valueManager.handleValue(req.user.Identificator, req.body, function (err, value_id) {
         if(err) {
             res.json({success: false, error: err.message}).end();
@@ -27,8 +26,8 @@ router.post('/value', auth().authenticate(), function (req, res) {
                     res.json({success: false, error: err.message}).end();
                     logger.warn("athlete '" + req.params.athlete_id + "' getting activities page ERROR: " + err.message);
                 } else {
-                    console.log("OUTPUT = "+newsWithValues.my_value);
-                    res.json({success: true, values: newsWithValues}).end();
+                    res.json({success: true, like_num: newsWithValues.like_num, dislike_num: newsWithValues.dislike_num, my_value
+                        : newsWithValues.my_value}).end();
                     logger.info("athlete '" + req.user.Identificator + "' got activities page");
                 }
             });
