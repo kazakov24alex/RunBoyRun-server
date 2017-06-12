@@ -21,8 +21,15 @@ router.post('/value', auth().authenticate(), function (req, res) {
             res.json({success: false, error: err.message}).end();
             logger.warn("athlete '"+req.user.Identificator+"' changing value ERROR: "+err.message);
         } else {
-            res.json({success: true}).end();
-            logger.info("athlete '"+req.user.Identificator+"' change value of activity (ID="+req.body.activity_id+")");
+            valueManager.getPreviewValue(req.body.activity_id, req.user.Identificator, function (err, newsWithValues) {
+                if (err) {
+                    res.json({success: false, error: err.message}).end();
+                    logger.warn("athlete '" + req.params.athlete_id + "' getting activities page ERROR: " + err.message);
+                } else {
+                    res.json({success: true, values: newsWithValues}).end();
+                    logger.info("athlete '" + req.user.Identificator + "' got activities page");
+                }
+            });
         }
     });
 });

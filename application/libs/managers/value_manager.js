@@ -187,7 +187,6 @@ valueManager = {
     },
 
 
-
     getPreviewValueNew : function (activity_id, identificator, idx, callback) {
         athleteManager.findAthleteIdByIdentificator(identificator, function(err, athlete_id) {
             if (err) {
