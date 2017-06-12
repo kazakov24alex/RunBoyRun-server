@@ -134,22 +134,36 @@ router.get('/newsfeed/start_id/:start_id/page_size/:page_size/page_num/:page_num
         } else {
             if(req.params.start_id == 0) {
                 activityManager.getFirstNewsPage(subscriptionsArr, req.params.page_size, req.params.page_num, function (err, news) {
-                    if (err) {
-                        res.json({success: false, error: err.message}).end();
-                        logger.warn("athlete '" + req.user.Identificator + "' getting newsfeed ERROR: " + err.message);
+                    if(news) {
+                        valueManager.addPreviewValuesToActivitiesArr(news, req.user.Identificator, function (err, newsWithValues) {
+                            if (err) {
+                                res.json({success: false, error: err.message}).end();
+                                logger.warn("athlete '" + req.params.athlete_id + "' getting activities page ERROR: " + err.message);
+                            } else {
+                                res.json({success: true, news: newsWithValues}).end();
+                                logger.info("athlete '" + req.user.Identificator + "' got activities page");
+                            }
+                        });
                     } else {
                         res.json({success: true, news: news}).end();
-                        logger.info("athlete '" + req.user.Identificator + "' get news page");
+                        logger.info("athlete '" + req.user.Identificator + "' got activities page");
                     }
                 });
             } else {
                 activityManager.getNewsPage(req.params.start_id, subscriptionsArr, req.params.page_size, req.params.page_num, function (err, news) {
-                    if (err) {
-                        res.json({success: false, error: err.message}).end();
-                        logger.warn("athlete '" + req.user.Identificator + "' getting newsfeed ERROR: " + err.message);
+                    if(news) {
+                        valueManager.addPreviewValuesToActivitiesArr(news, req.user.Identificator, function (err, newsWithValues) {
+                            if (err) {
+                                res.json({success: false, error: err.message}).end();
+                                logger.warn("athlete '" + req.params.athlete_id + "' getting activities page ERROR: " + err.message);
+                            } else {
+                                res.json({success: true, news: newsWithValues}).end();
+                                logger.info("athlete '" + req.user.Identificator + "' got activities page");
+                            }
+                        });
                     } else {
                         res.json({success: true, news: news}).end();
-                        logger.info("athlete '" + req.user.Identificator + "' get news page");
+                        logger.info("athlete '" + req.user.Identificator + "' got activities page");
                     }
                 });
             }
