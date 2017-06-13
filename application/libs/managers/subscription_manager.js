@@ -146,8 +146,8 @@ subscriptionManager = {
                 for(var i = 0; i < athletes.length; i++) {
                     var newAthlete = {
                         id: athletes[i].Id,
-                        Name: athletes[i].Name,
-                        Surname: athletes[i].Surname
+                        name: athletes[i].Name,
+                        surname: athletes[i].Surname
                     };
                     arr.push(newAthlete);
                 }
