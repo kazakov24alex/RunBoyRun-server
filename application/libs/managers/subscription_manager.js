@@ -142,8 +142,17 @@ subscriptionManager = {
                 attributes: ['Id', 'Name', 'Surname']
 
             }).then(function (athletes) {
+                var arr = [];
+                for(var i = 0; i < athletes.length; i++) {
+                    var newAthlete = {
+                        id: athletes[i].Id,
+                        Name: athletes[i].Name,
+                        Surname: athletes[i].Surname
+                    };
+                    arr.push(newAthlete);
+                }
 
-                return callback(null, athletes);
+                return callback(null, arr);
 
             }).catch(function (error) {
                 return callback(error, null);
